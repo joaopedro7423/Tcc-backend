@@ -1,10 +1,45 @@
 import { getRepository } from "typeorm";
-import { Request, Response } from "express";
+import { Request, Response} from "express";
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 
 import User from "../models/Users"
+import UsersRepository from "../repositories/UsersRepository";
+import CreateUsersService from "../services/CreateUsersService";
 
+
+export default class UserController {
+    public async create(req: Request, res: Response): Promise<Response> {
+        const {name, email, password, role} = req.body
+    
+        const userRepository = new UsersRepository()
+        const createUsers = new CreateUsersService(userRepository)
+
+        const user = await createUsers.execute({
+            name,
+            email,
+            password,
+            role
+        })
+
+        //não é legal fiar retornando password ou alguns dados sensiveis então se usa isso:
+        delete user.password
+
+        return res.json(user)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+/*
 //Logar no sistema
 export const login = async (req: Request, res: Response) => {
 
@@ -110,4 +145,4 @@ export const deletUser = async (req: Request, res: Response) => {
     }
 
     res.status(404).json({ message: 'User not found!' })
-}
+}*/
