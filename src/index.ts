@@ -1,14 +1,14 @@
 import './config/env'
 import "reflect-metadata";
-import { createConnection } from "typeorm";
 import * as express from "express";
-import routes from './routes'
+import { createConnection } from 'typeorm';
 
+import routes from './routes'
+import './database'
+
+//arquivo de servidor
 
 const app = express();
-
-createConnection();
-
 
 app.use(express.json());
 app.use(routes);
