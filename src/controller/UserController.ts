@@ -1,8 +1,9 @@
 import { getRepository } from "typeorm";
 import { Request, Response } from "express";
-import { User } from "../entity/User";
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
+
+import User from "../models/Users"
 
 //Logar no sistema
 export const login = async (req: Request, res: Response) => {
@@ -96,3 +97,17 @@ export const saveUser = async (req: Request, res: Response) => {
     return res.json(user)
 }
 
+//Deletar Usuário
+export const deletUser = async (req: Request, res: Response) => {
+
+    const { id } = req.params
+
+    const user = await getRepository(User).delete(id)
+
+    if (user.affected === 1) {
+        const userUpadate = await getRepository(User).findOne(id)
+        return res.json({ message: 'User removed!' })
+    }
+
+    res.status(404).json({ message: 'User not found!' })
+}
