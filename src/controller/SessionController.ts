@@ -6,7 +6,7 @@ import * as jwt from 'jsonwebtoken'
 import User from "../models/Users"
 import UsersRepository from "../repositories/UsersRepository";
 import CreateUsersService from "../services/CreateUsersService";
-import SessionUsersService from "../services/SessionServicec";
+import SessionUsersService from "../services/SessionService";
 
 
 export default class SessionController {
