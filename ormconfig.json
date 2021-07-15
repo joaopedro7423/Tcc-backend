@@ -1,24 +1,24 @@
 {
-   "type": "postgres",
-   "host": "localhost",
-   "port": 5432,
-   "username": "postgres",
-   "password": "Acqddsdl7423",
-   "database": "db_tcc_backend",
-   "synchronize": true,
-   "logging": false,
-   "entities": [
-      "src/entity/**/*.ts"
-   ],
-   "migrations": [
-      "src/migration/**/*.ts"
-   ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
-   ],
-   "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
-   }
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "Acqddsdl7423",
+    "database": "db_tcc_backend",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+        "src/models/*.ts"
+    ],
+    "migrations": [
+        "src/database/migrations/**/*.ts"
+    ],
+    "subscribers": [
+        "src/subscriber/**/*.ts"
+    ],
+    "cli": {
+        "entitiesDir": "src/models",
+        "migrationsDir": "src/database/migrations",
+        "subscribersDir": "src/subscriber"
+    }
 }
