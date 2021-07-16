@@ -29,14 +29,14 @@ export default class SessionUsersService {
         const user = await this.userRepository.findByEmail(email)
 
         if (!user) {
-            throw new AppError('Credenciais inválidas', 401)
+            throw new AppError('Email não compativel', 401)
         }
 
         //agora vai comparar a senha que vai ser passada com a senha do banco
         //usa o método compare do próprio bcrypt
         const passwordCompare = await compare(password, user.password)
         if (!passwordCompare) {
-            throw new AppError('Credenciais inválidas', 401)
+            throw new AppError('Senha não compativel', 401)
         }
 
         //Conferiu se esta com email e senha certos, agora se cria um token
