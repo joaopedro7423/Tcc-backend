@@ -1,5 +1,7 @@
 import { hash } from "bcrypt";
 import User from "../models/Users";
+import AppError from "../errors/AppError";
+
 import IUsersRepository from "../repositories/IUsersRepository";
 import UsersRepository from "../repositories/UsersRepository";
 
@@ -20,6 +22,12 @@ export default class CreateUsersService {
 
     }
     public async execute({ name, email, password, role }: Request): Promise<User> {
+        const userExist = await this.userRepository.findByEmail(email)
+
+        if(userExist){
+            throw new AppError('Email já utilizado', 401)
+        }
+
 
         const passwordHash = await hash(password, 8)
 
