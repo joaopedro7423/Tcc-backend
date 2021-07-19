@@ -25,6 +25,10 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
+  public async findAll(): Promise<User[]> {
+    return this.ormRepository.find();
+  }
+
   public async create({
     name,
     email,
