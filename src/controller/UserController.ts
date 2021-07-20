@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import UsersRepository from "../repositories/UsersRepository";
 import CreateUsersService from "../services/CreateUsersService";
+import DeleteUsersService from "../services/DeleteUsersService";
 import PaginatedUsersService from "../services/PaginatedUsersService";
 import UpdateUsersService from "../services/UpdateUsersService";
 
@@ -34,8 +35,7 @@ export default class UserController {
 
     const userRepository = new UsersRepository();
 
-    const users = await userRepository.findAllByName(name.toString())
-
+    const users = await userRepository.findAllByName(name.toString() || '');
 
     return res.json(users);
   }
@@ -75,5 +75,15 @@ export default class UserController {
     });
 
     return res.json(user);
+  }
+
+  public async destroy(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const userRepository = new UsersRepository();
+    const destroyUsers = new DeleteUsersService(userRepository);
+    await destroyUsers.execute(id);
+
+    return res.status(204).send();
   }
 }
