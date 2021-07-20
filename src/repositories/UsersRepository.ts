@@ -1,4 +1,4 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Like, Repository } from "typeorm";
 import CreateUsersDTO from "../dtos/CreateUsersDTO";
 import User from "../models/Users";
 import IUsersRepository from "./IUsersRepository";
@@ -23,6 +23,12 @@ export default class UsersRepository implements IUsersRepository {
     });
 
     return user;
+  }
+
+  public async findAllByName(name: string): Promise<User[]> {
+    return this.ormRepository.find({
+      name: Like(`%${name}%`),
+    });
   }
 
   public async findAll(): Promise<User[]> {
@@ -54,5 +60,9 @@ export default class UsersRepository implements IUsersRepository {
 
   public async save(user: User): Promise<User> {
     return this.ormRepository.save(user);
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.ormRepository.delete(id);
   }
 }

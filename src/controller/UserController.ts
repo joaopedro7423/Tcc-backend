@@ -29,6 +29,17 @@ export default class UserController {
     return res.json(users);
   }
 
+  public async search(req: Request, res: Response): Promise<Response> {
+    const { name } = req.query;
+
+    const userRepository = new UsersRepository();
+
+    const users = await userRepository.findAllByName(name.toString())
+
+
+    return res.json(users);
+  }
+
   public async create(req: Request, res: Response): Promise<Response> {
     const { name, email, password, role } = req.body;
 

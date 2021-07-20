@@ -9,6 +9,8 @@ userRoutes.get("/", userController.index);
 
 userRoutes.get("/pagineted", userController.paginated);
 
+userRoutes.get("/search", userController.search);
+
 userRoutes.post("/", userController.create);
 
 userRoutes.put("/:id", userController.update);
