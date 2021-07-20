@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 
 import UsersRepository from "../repositories/UsersRepository";
 import CreateUsersService from "../services/CreateUsersService";
+import PaginatedUsersService from "../services/PaginatedUsersService";
 import UpdateUsersService from "../services/UpdateUsersService";
 
 export default class UserController {
@@ -10,6 +11,20 @@ export default class UserController {
     const userRepository = new UsersRepository();
 
     const users = await userRepository.findAll();
+
+    return res.json(users);
+  }
+
+  public async paginated(req: Request, res: Response): Promise<Response> {
+    const { page } = req.query;
+
+    const userRepository = new UsersRepository();
+    const userPaginated = new PaginatedUsersService(userRepository);
+
+    const users = await userPaginated.execute({
+      //se o page for diferente de undefined transforma para string como decimal se não passa a pagina 0
+      page: page !== undefined ? parseInt(page.toString(), 10) : 0,
+    });
 
     return res.json(users);
   }

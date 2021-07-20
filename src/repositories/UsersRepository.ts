@@ -29,6 +29,13 @@ export default class UsersRepository implements IUsersRepository {
     return this.ormRepository.find();
   }
 
+  public async findAllPaginated(page: number): Promise<[User[], number]> {
+    return this.ormRepository.findAndCount({
+      skip: page,
+      take: 10, //quantidade de elementos que vamos limitar por consulta
+    });
+  }
+
   public async create({
     name,
     email,
