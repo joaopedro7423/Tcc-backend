@@ -1,24 +1,25 @@
-import { Request, Response, NextFunction } from 'express'
-import * as jwt from 'jsonwebtoken'
+import { Request, Response, NextFunction } from "express";
+import * as jwt from "jsonwebtoken";
+import AppError from "../errors/AppError";
 
+export const authenticate = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<any> | void => {
+  const authHeader = req.headers.authorization;
 
-//midleware, só poderá acessar as rotas se o token for enviado no cabeçalho
-export const auth = async (req: Request, res: Response, next: NextFunction) => {
+  if (!authHeader) {
+    throw new AppError("JWT token is missing!", 401);
+  }
 
-    const authHeader = req.headers.authorization
+  //Emana o Bearer e o token, o split devolve o token
+  const [, token] = authHeader.split(" ");
 
-    if (!authHeader) {
-        return res.status(401).json({ message: 'Token is required!' })
-    }
-
-    //Emana o Bearer e o token, o split devolve o token
-    const [, token] = authHeader.split(' ')
-
-    try {
-
-        await jwt.verify(token, process.env.APP_SECRET)
-        next()
-    } catch (error) {
-        return res.status(401).json({ message: 'Token invalid or expired!' })
-    }
-}
+  try {
+    jwt.verify(token, String(process.env.APP_SECRET));
+    next();
+  } catch (error) {
+    throw new AppError("JWT token is invalid!", 401);
+  }
+};
