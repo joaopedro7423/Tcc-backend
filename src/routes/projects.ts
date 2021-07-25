@@ -14,4 +14,12 @@ projectRoutes.get("/", projectController.index);
 
 projectRoutes.post("/", projectController.create);
 
+
+projectRoutes.put("/:id", projectController.update);
+
+projectRoutes.get("/:id", projectController.show);
+
+projectRoutes.patch("/:id", projectController.chengeStatus); //patch é recomendado para alterar apenas 1 campo como nesse caso
+
+
 export default projectRoutes;
