@@ -22,7 +22,7 @@ export default class Project {
   user_id: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: "user_id" })
+  @JoinColumn({name: 'usser_id'})
   user: string;
 
   @Column({

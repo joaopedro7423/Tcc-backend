@@ -9,8 +9,8 @@ export default class ListAllProjectsService {
     this.projectRepository = projectRepository;
   }
   public async execute(): Promise<Project[]> {
-    const project = await this.projectRepository.findAll();
+    const projects = await this.projectRepository.findAll();
 
-    return project;
+    return projects;
   }
 }

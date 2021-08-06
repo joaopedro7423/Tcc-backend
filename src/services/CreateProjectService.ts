@@ -3,24 +3,24 @@ import AppError from "../errors/AppError";
 import IProjectsRepository from "../repositories/IProjectsRepository";
 import Project from "../models/Project";
 import ProjectStatus from "../enums/projectStatus";
-import IUsersRepository from "../repositories/IUsersRepository";
+import UsersRepository from "../repositories/UsersRepository";
 
 interface IRequest {
   name: string;
-  logo?: string;
-  description: string;
   user_id: string;
+  description: string;
+  logo: string;
 }
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class CreateProjectService {
   private projectRepository: IProjectsRepository;
 
-  private userRepository: IUsersRepository;
+  private userRepository: UsersRepository;
 
   constructor(
     projectRepository: IProjectsRepository,
-    userRepository: IUsersRepository
+    userRepository: UsersRepository
   ) {
     this.projectRepository = projectRepository;
     this.userRepository = userRepository;
@@ -39,9 +39,9 @@ export default class CreateProjectService {
 
     const project = await this.projectRepository.create({
       name,
+      user_id,
       description,
       logo,
-      user_id,
       status: ProjectStatus.NEW,
     });
 
