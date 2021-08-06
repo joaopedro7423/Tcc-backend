@@ -9,7 +9,7 @@ import ListAllProjectsService from "../services/ListAllProjectsService";
 import UpdateProjectService from "../services/UpdateProjectService";
 import UpdateProjectStatusService from "../services/UpdateProjectStatusService";
 
-export default class ProjectController {
+export default class ProjectsController {
   //para achar todos os users listar claro
   public async index(req: Request, res: Response): Promise<Response> {
     const projectsRepository = new ProjectsRepository();
@@ -33,18 +33,19 @@ export default class ProjectController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, description, user_id } = request.body;
+    const { name, user_id, description, logo } = request.body;
     const projectsRepository = new ProjectsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProjectService(
       projectsRepository,
-      userRepository
+      userRepository,
     );
 
     const project = await createProject.execute({
       name,
       user_id,
       description,
+      logo,
     });
 
     return response.status(201).json(project);
