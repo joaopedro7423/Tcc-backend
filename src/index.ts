@@ -7,6 +7,7 @@ import "reflect-metadata";
 import './config/env'
 import 'express-async-errors'
 import cors from 'cors'
+import {resolve} from 'path'
 
 
 //arquivo de servidor
@@ -15,6 +16,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors())
+app.use('/files', express.static(resolve(__dirname, '..', 'uploads'))); //rota para poder visualizar a imagem 
 app.use(routes);
 
 app.use((err: Error, req: Request, res: Response, _: NextFunction) => {
