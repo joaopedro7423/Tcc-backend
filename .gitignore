@@ -5,4 +5,5 @@ build/
 tmp/
 temp/
 database/migrations
+uploads
 comando_uteis.txt
