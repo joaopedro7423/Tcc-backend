@@ -1,7 +1,7 @@
 import { Router } from "express";
 import userRoutes from "./user";
 import sessionRoutes from "./session";
-import projectRoutes from "./projects";
+import projectRoutes from "./project";
 
 const routes = Router();
 const prefixRoutes = "/api/v1";
