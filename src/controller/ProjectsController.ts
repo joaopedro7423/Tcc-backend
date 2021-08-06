@@ -33,7 +33,8 @@ export default class ProjectsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, user_id, description, logo } = request.body;
+    const { name, user_id, description } = request.body;
+    const {filename} = request.file;
     const projectsRepository = new ProjectsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProjectService(
@@ -45,7 +46,7 @@ export default class ProjectsController {
       name,
       user_id,
       description,
-      logo,
+      logo: filename
     });
 
     return response.status(201).json(project);

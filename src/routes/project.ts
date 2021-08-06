@@ -1,6 +1,8 @@
 import { Router } from "express";
 import ProjectsController from "../controller/ProjectsController";
 import { authenticate } from "../middleware/auth";
+import multer from 'multer'
+import multerConfig from '../config/multer'
 
 const projectRoutes = Router();
 
@@ -12,7 +14,7 @@ projectRoutes.get("/", projectController.index);
 
 //projectRoutes.get("/", authenticate, projectController.index); // assim se autentica individualmente
 
-projectRoutes.post("/", projectController.create);
+projectRoutes.post("/", multer(multerConfig).single('logo'),projectController.create);//o multer funciona como middleware | o single serve para passar 1 imagem por vez
 
 projectRoutes.put("/:id", projectController.update);
 
@@ -21,3 +23,9 @@ projectRoutes.get("/:id", projectController.show);
 projectRoutes.patch("/:id", projectController.chengeStatus); //patch é recomendado para alterar apenas 1 campo como nesse caso
 
 export default projectRoutes;
+
+
+/*
+single('logo'): 'logo' fild name que vai ser passado no post no react no front carai
+
+*/
