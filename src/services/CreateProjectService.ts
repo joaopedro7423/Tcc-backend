@@ -7,9 +7,9 @@ import UsersRepository from "../repositories/UsersRepository";
 
 interface IRequest {
   name: string;
+  logo?: string; 
   user_id: string;
   description: string;
-  logo: string;
 }
 
 //essa parada (Service) aqui que se faz as regras de negócio
