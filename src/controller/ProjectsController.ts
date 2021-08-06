@@ -8,6 +8,7 @@ import ShowProjectService from "../services/ShowProjectService";
 import ListAllProjectsService from "../services/ListAllProjectsService";
 import UpdateProjectService from "../services/UpdateProjectService";
 import UpdateProjectStatusService from "../services/UpdateProjectStatusService";
+import UploadLogoOfProjectProjectService from "../services/UploadLogoOfProjectProjectService";
 
 export default class ProjectsController {
   //para achar todos os users listar claro
@@ -34,22 +35,39 @@ export default class ProjectsController {
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { name, user_id, description } = request.body;
-    const {filename} = request.file;
     const projectsRepository = new ProjectsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProjectService(
       projectsRepository,
-      userRepository,
+      userRepository
     );
-
+ 
     const project = await createProject.execute({
       name,
       user_id,
       description,
-      logo: filename
+      logo: request.file?.filename,
     });
 
     return response.status(201).json(project);
+  }
+
+
+  public async uploadLogo(
+    request: Request,
+    response: Response
+  ): Promise<Response> {
+    const { id } = request.params;
+    const { filename } = request.file;
+    const projectsRepository = new ProjectsRepository();
+    const service = new UploadLogoOfProjectProjectService(projectsRepository);
+
+    const project = await service.execute({
+      id,
+      logo: filename,
+    });
+
+    return response.json(project);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
