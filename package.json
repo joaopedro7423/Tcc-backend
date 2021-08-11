@@ -5,7 +5,8 @@
     "scripts": {
         "start": "ts-node src/index.ts",
         "dev": "nodemon src/index.ts",
-        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+        "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+        "dev2": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts"
     },
     "eslint.validate": [
         "javascript",
@@ -32,6 +33,7 @@
         "nodemon": "^2.0.12",
         "prettier": "^2.3.2",
         "ts-node": "^10.1.0",
+        "ts-node-dev": "^1.1.8",
         "typescript": "^4.4.0-dev.20210805"
     },
     "dependencies": {
