@@ -30,7 +30,7 @@ export default class Project {
   @Column()
   student_id: string;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Student)
   @JoinColumn({name: 'student_id'})
   student: Student;
 
