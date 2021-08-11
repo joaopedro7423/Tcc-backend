@@ -54,7 +54,7 @@ export default class UserController {
     });
 
     //não é legal fiar retornando password ou alguns dados sensiveis então se usa isso:
-    delete user.password;
+  //  delete user.password;
 
     return res.status(201).json(user);
   }

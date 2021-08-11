@@ -1,9 +1,9 @@
-import { hash } from "bcrypt";
-import User from "../models/Users";
-import AppError from "../errors/AppError";
+import { hash } from 'bcrypt';
+import User from '../models/Users';
+import AppError from '../errors/AppError';
 
-import IUsersRepository from "../repositories/IUsersRepository";
-import UsersRepository from "../repositories/UsersRepository";
+import IUsersRepository from '../repositories/IUsersRepository';
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
   name: string;
@@ -24,11 +24,11 @@ export default class CreateUsersService {
     email,
     password,
     role,
-  }: Request): Promise<User> {
+  }: Request): Promise<Omit<User, 'password'>> {
     const userExist = await this.userRepository.findByEmail(email);
 
     if (userExist) {
-      throw new AppError("Email já utilizado", 401);
+      throw new AppError('Email já utilizado', 401);
     }
 
     const passwordHash = await hash(password, 8);
@@ -40,6 +40,7 @@ export default class CreateUsersService {
       role,
     });
 
+  
     return user;
   }
 }
