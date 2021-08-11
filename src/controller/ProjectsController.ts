@@ -34,16 +34,17 @@ export default class ProjectsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, user_id, description } = request.body;
+    const { name, user_id, description, student_id } = request.body;
     const projectsRepository = new ProjectsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProjectService(
       projectsRepository,
       userRepository
     );
- 
+
     const project = await createProject.execute({
       name,
+      student_id,
       user_id,
       description,
       logo: request.file?.filename,
@@ -51,7 +52,6 @@ export default class ProjectsController {
 
     return response.status(201).json(project);
   }
-
 
   public async uploadLogo(
     request: Request,

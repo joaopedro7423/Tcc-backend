@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import ProjectStatus from "../enums/projectStatus";
+import Student from "./Student";
 import User from "./Users";
 
 @Entity("projects")
@@ -22,8 +23,17 @@ export default class Project {
   user_id: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({name: 'usser_id'})
+  @JoinColumn({name: 'user_id'})
   user: string;
+
+
+  @Column()
+  student_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({name: 'student_id'})
+  student: Student;
+
 
   @Column({
     type: "varchar",

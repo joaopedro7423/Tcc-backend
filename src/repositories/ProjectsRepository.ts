@@ -23,6 +23,7 @@ class ProjectsRepository implements IProjectsRepository {
   public async create({
     name,
     user_id,
+    student_id,
     description,
     logo,
     status,
@@ -30,6 +31,7 @@ class ProjectsRepository implements IProjectsRepository {
     const project = this.ormRepository.create({
       name,
       user_id,
+      student_id,
       description,
       logo,
       status,
