@@ -5,7 +5,7 @@
     "username": "postgres",
     "password": "Acqddsdl7423",
     "database": "db_tcc_backend",
-    "synchronize": true,
+    "synchronize": false,
     "logging": false,
     "entities": [
         "src/models/*.ts"
