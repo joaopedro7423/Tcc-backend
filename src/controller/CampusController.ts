@@ -35,7 +35,7 @@ export default class CampusController {
 
     const campus = await updateUsers.execute({
       id,
-      name,
+      name
     });
 
     return res.json(campus);
