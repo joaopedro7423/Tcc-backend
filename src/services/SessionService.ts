@@ -40,7 +40,7 @@ export default class SessionUsersService {
         }
 
         //Conferiu se esta com email e senha certos, agora se cria um token
-        const token = sign({}, process.env.APP_SECRET, {
+        const token = sign({id: user.id}, process.env.APP_SECRET, {
             expiresIn: '1d'
         })
 

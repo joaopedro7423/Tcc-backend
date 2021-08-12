@@ -1,12 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import AppError from "../errors/AppError";
+import { ICustomJWTPayload } from "../interfaces/ICustomJWTPayload";
 
-export const authenticate = (
+export const authenticate = async (
   req: Request,
   res: Response,
   next: NextFunction
-): Promise<any> | void => {
+): Promise<any> => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -17,7 +18,10 @@ export const authenticate = (
   const [, token] = authHeader.split(" ");
 
   try {
-    jwt.verify(token, String(process.env.APP_SECRET));
+    const payload = jwt.verify(token, String(process.env.APP_SECRET)) as ICustomJWTPayload;
+
+    req.body.user_id = payload.id
+    
     next();
   } catch (error) {
     throw new AppError("JWT token is invalid!", 401);
