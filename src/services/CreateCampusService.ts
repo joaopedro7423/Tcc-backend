@@ -16,15 +16,17 @@ export default class CreateCampusService {
     this.campusRepository = campusRepository;
   }
   public async execute({ name }: Request): Promise<Campus> {
+    const nameUpper = name.toUpperCase().trim();
 
-    const campusExist = await this.campusRepository.findOneByName(name);
+   // console.log(nameUpper);
+    const campusExist = await this.campusRepository.findOneByName(nameUpper);
 
     if (campusExist) {
       //console.log(campusExist)
       throw new AppError('Campus já utilizado', 401);
     }
 
-    const campus = await this.campusRepository.create(name);
+    const campus = await this.campusRepository.create(nameUpper);
 
     return campus;
   }
