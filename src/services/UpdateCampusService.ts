@@ -1,7 +1,5 @@
-import { hash } from "bcrypt";
-import Campus from "../models/Campus";
-import AppError from "../errors/AppError";
-
+import Campus from '../models/Campus';
+import AppError from '../errors/AppError';
 
 import ICampusRepository from '../repositories/ICampusRepository';
 import CampusRepository from '../repositories/CampusRepository';
@@ -18,31 +16,34 @@ export default class UpdateCampusService {
   constructor(campusRepository: CampusRepository) {
     this.campusRepository = campusRepository;
   }
-  public async execute({
-    id,
-    name
-  }: Request): Promise<Campus> {
+  public async execute({ id, name }: Request): Promise<Campus> {
     const campus = await this.campusRepository.findById(id);
 
     //se o cliente não existir retorna um error
     if (!campus) {
-      throw new AppError("Campus não encontrado!", 400);
+      throw new AppError('Campus não encontrado!', 400);
     }
+    //console.log(campus)
+
+    const nameUpper = name.toUpperCase().trim();
+    //console.log(nameUpper);
 
     //verifica se o name fornecido pelo usuário é diferente do que já tem
-    if (name !== campus.name) {
-      const campusExist = await this.campusRepository.findAllByName(name);
+    if (nameUpper !== campus.name) {
+      const campusExist = await this.campusRepository.findOneByName(nameUpper);
+      //console.log(campusExist);
 
-      //se o name fornecido pelo usuario já estiver em uso, retorna esse error
+      //verifica se o nome do campus já existe
+
       if (campusExist) {
-        throw new AppError("Campus já existe!", 401);
+        throw new AppError('Esse campus já é cadastrado!', 401);
       }
+    } else {
+      throw new AppError('Campus com nome fornecido igual!', 401);
     }
 
+    campus.name = nameUpper;
 
-    //caso se passe dessas 2 condições
-    //atualizase os dados do objeto
-    campus.name = name;
     //salva
     await this.campusRepository.save(campus);
 
