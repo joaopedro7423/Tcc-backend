@@ -1,4 +1,4 @@
-import IPaginated from "../interfaces/pagineted";
+import IPaginated from "../interfaces/IPagineted";
 import Student from "../models/Student";
 import IStudentRepository from "../repositories/IStudentRepository";
 import StudentRepository from "../repositories/StudentRepository";

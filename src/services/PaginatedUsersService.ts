@@ -1,4 +1,4 @@
-import IPaginated from "../interfaces/pagineted";
+import IPaginated from "../interfaces/IPagineted";
 import User from "../models/Users";
 import IUsersRepository from "../repositories/IUsersRepository";
 import UsersRepository from "../repositories/UsersRepository";
