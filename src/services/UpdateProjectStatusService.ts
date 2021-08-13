@@ -3,7 +3,6 @@ import AppError from "../errors/AppError";
 import IProjectsRepository from "../repositories/IProjectsRepository";
 import Project from "../models/Project";
 import ProjectStatus from "../enums/projectStatus";
-import IUsersRepository from "../repositories/IUsersRepository";
 
 interface IRequest {
   id: string;
