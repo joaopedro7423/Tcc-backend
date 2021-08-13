@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import CampusController from '../controller/CampusController';
 import { authenticate } from '../middleware/auth';
-import { onlyAdm } from '../middleware/authAdm';
+import { onlyProfessor } from '../middleware/authProfessor';
 
 const campusRoutes = Router();
 
@@ -9,9 +9,12 @@ const campusController = new CampusController();
 
 campusRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
 
-campusRoutes.use(onlyAdm); //para um grupo específico ter acesso a rotas
 
-campusRoutes.post('/', campusController.create);
+campusRoutes.use(onlyProfessor); 
+//campusRoutes.use(onlyProfessor); //para um grupo específico ter acesso a rotas
+//campusRoutes.use(); //para um grupo específico ter acesso a rotas
+
+campusRoutes.post('/',onlyProfessor ,campusController.create);
 
 //campusRoutes.get("/", authenticate, campusController.index); // assim se autentica individualmente
 

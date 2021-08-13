@@ -1,32 +1,32 @@
-import { Request, Response, NextFunction } from "express";
-import AppError from "../errors/AppError";
-import UsersRepository from "../repositories/UsersRepository";
+import { Request, Response, NextFunction } from 'express';
+import AppError from '../errors/AppError';
+import UsersRepository from '../repositories/UsersRepository';
 
 const throwError = () => {
-  console.log('verifique a existencia do middleware authenticate')
-  throw new AppError('Usuario não autenticado', 401)
-}
+  console.log('verifique a existencia do middleware authenticate');
+  throw new AppError('Usuario não autenticado', 401);
+};
 
-export const onlyAdm = async (
+export const onlyStudent = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ): Promise<any> => {
   const { user_id } = req.body;
 
   if (!user_id) {
-    throwError()
+    throwError();
   }
 
-  const user = await new UsersRepository().findById(user_id)
+  const user = await new UsersRepository().findById(user_id);
 
   if (!user) {
-    throwError()
+    throwError();
   }
-  
-  if (user.role === 'student') {
-    next()
-  } else { 
-    throw new AppError('Permissão necessária', 401)
+
+  if (user.role === 'student' || user.role === 'adm') {
+    next();
+  } else {
+    throw new AppError('Permissão necessária', 401);
   }
 };
