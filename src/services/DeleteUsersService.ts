@@ -1,5 +1,3 @@
-import { hash } from "bcrypt";
-import User from "../models/Users";
 import AppError from "../errors/AppError";
 
 import IUsersRepository from "../repositories/IUsersRepository";
