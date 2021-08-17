@@ -1,9 +1,9 @@
-import { hash } from "bcrypt";
-import User from "../models/Users";
-import AppError from "../errors/AppError";
+import { hash } from 'bcrypt';
+import User from '../models/Users';
+import AppError from '../errors/AppError';
 
-import IUsersRepository from "../repositories/IUsersRepository";
-import UsersRepository from "../repositories/UsersRepository";
+import IUsersRepository from '../repositories/IUsersRepository';
+import UsersRepository from '../repositories/UsersRepository';
 
 interface Request {
   id: string;
@@ -11,6 +11,7 @@ interface Request {
   email: string;
   password: string;
   role: string;
+  course_id: string;
 }
 
 //essa parada (Service) aqui que se faz as regras de negócio
@@ -26,12 +27,13 @@ export default class UpdateUsersService {
     email,
     password,
     role,
+    course_id,
   }: Request): Promise<User> {
     const user = await this.userRepository.findById(id);
 
     //se o cliente não existir retorna um error
     if (!user) {
-      throw new AppError("Usuario não encontrado!", 400);
+      throw new AppError('Usuario não encontrado!', 400);
     }
 
     //verifica se o email fornecido pelo usuário é diferente do que já tem
@@ -40,7 +42,7 @@ export default class UpdateUsersService {
 
       //se o email fornecido pelo usuario já estiver em uso, retorna esse error
       if (emailExist) {
-        throw new AppError("E-mail já está sendo usado!", 401);
+        throw new AppError('E-mail já está sendo usado!', 401);
       }
     }
 
@@ -56,6 +58,7 @@ export default class UpdateUsersService {
     user.name = name;
     user.email = email;
     user.role = role;
+    user.course_id = course_id;
 
     //salva
     await this.userRepository.save(user);

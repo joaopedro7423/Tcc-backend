@@ -1,10 +1,11 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
+import CoursesRepository from '../repositories/CoursesRepository';
 
-import UsersRepository from "../repositories/UsersRepository";
-import CreateUsersService from "../services/CreateUsersService";
-import DeleteUsersService from "../services/DeleteUsersService";
-import PaginatedUsersService from "../services/PaginatedUsersService";
-import UpdateUsersService from "../services/UpdateUsersService";
+import UsersRepository from '../repositories/UsersRepository';
+import CreateUsersService from '../services/CreateUsersService';
+import DeleteUsersService from '../services/DeleteUsersService';
+import PaginatedUsersService from '../services/PaginatedUsersService';
+import UpdateUsersService from '../services/UpdateUsersService';
 
 export default class UserController {
   //para achar todos os users listar claro
@@ -41,27 +42,32 @@ export default class UserController {
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, course_id } = req.body;
 
     const userRepository = new UsersRepository();
-    const createUsers = new CreateUsersService(userRepository);
+    const courseRepository = new CoursesRepository();
+    const createUsers = new CreateUsersService(
+      userRepository,
+      courseRepository,
+    );
 
     const user = await createUsers.execute({
       name,
       email,
       password,
       role,
+      course_id,
     });
 
     //não é legal fiar retornando password ou alguns dados sensiveis então se usa isso:
-  //  delete user.password;
+    //  delete user.password;
 
     return res.status(201).json(user);
   }
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, course_id } = req.body;
 
     const userRepository = new UsersRepository();
     const updateUsers = new UpdateUsersService(userRepository);
@@ -72,6 +78,7 @@ export default class UserController {
       email,
       password,
       role,
+      course_id,
     });
 
     return res.json(user);

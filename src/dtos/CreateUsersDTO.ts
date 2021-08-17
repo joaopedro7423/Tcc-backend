@@ -3,4 +3,5 @@ export default interface CreateUsersDTO {
     email: string;
     password: string;
     role: string;
+    course_id: string;
 }

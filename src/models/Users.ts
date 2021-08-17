@@ -33,7 +33,7 @@ export default class User {
 
   @ManyToOne(() => Course)
   @JoinColumn({ name: 'course_id' })
-  coruse: Course;
+  course: Course;
 
   @CreateDateColumn()
   create_at: Date;

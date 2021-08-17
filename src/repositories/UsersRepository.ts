@@ -32,7 +32,9 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async findAll(): Promise<User[]> {
-    return this.ormRepository.find();
+    return this.ormRepository.find({
+      relations: ["course", "campus"],
+    });
   }
 
   public async findAllPaginated(page: number): Promise<[User[], number]> {
@@ -47,12 +49,14 @@ export default class UsersRepository implements IUsersRepository {
     email,
     password,
     role,
+    course_id
   }: CreateUsersDTO): Promise<User> {
     const user = this.ormRepository.create({
       name,
       email,
       password,
       role,
+      course_id
     });
     await this.ormRepository.save(user);
     return user;
