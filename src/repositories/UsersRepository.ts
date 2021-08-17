@@ -33,7 +33,7 @@ export default class UsersRepository implements IUsersRepository {
 
   public async findAll(): Promise<User[]> {
     return this.ormRepository.find({
-      relations: ["course", "campus"],
+      relations: ["course" , "course.campus"],
     });
   }
 
