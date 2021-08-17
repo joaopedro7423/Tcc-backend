@@ -24,10 +24,21 @@ export default class UpdateCourseService {
     this.campusRepository = campusRepository;
   }
   public async execute({ id, name, campus_id }: IRequest): Promise<Course> {
-    const project = await this.coursesRepository.findById(id);
+    const course = await this.coursesRepository.findById(id);
 
-    if (!project) {
+    if (!course) {
       throw new AppError('Course not found!', 400);
+    }
+
+    const nameUpper = name.toUpperCase().trim();
+
+    if (nameUpper !== course.name) {
+      const campusExist = await this.coursesRepository.findOneByName(nameUpper);
+      if (campusExist) {
+        throw new AppError('Esse campus já é cadastrado!', 401);
+      }
+    } else {
+      throw new AppError('Campus com nome fornecido igual!', 401);
     }
 
     const campusExist = await this.campusRepository.findById(campus_id);
@@ -36,11 +47,11 @@ export default class UpdateCourseService {
       throw new AppError('Campus not found!', 400);
     }
 
-    project.name = name;
-    project.campus_id = campus_id;
+    course.name = nameUpper;
+    course.campus_id = campus_id;
 
-    await this.coursesRepository.save(project);
+    await this.coursesRepository.save(course);
 
-    return project;
+    return course;
   }
 }
