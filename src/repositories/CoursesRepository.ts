@@ -16,14 +16,23 @@ export default class CoursesRepository {
     });
   }
 
-  public async findOneByName(name: string): Promise<Courses | undefined> {
+  public async findAllByCampusId(campus_id: string): Promise<Courses[] | undefined> {
+    return await this.ormRepository.find({
+      where: { campus_id },
+    });
+  }
+
+  public async findOneByName(name: string, campus_id: string): Promise<Courses | undefined> {
     return this.ormRepository.findOne({
-      where: { name: Like(`%${name}%`) },
+      where: { name: Like(`${name}`) , campus_id: `${campus_id}`},
+      
     });
   }
 
   public async findAll(): Promise<Courses[]> {
-    return this.ormRepository.find();
+    return this.ormRepository.find({
+      relations: ["campus"]
+    });
   }
 
   public async findAllPaginated(page: number): Promise<[Courses[], number]> {

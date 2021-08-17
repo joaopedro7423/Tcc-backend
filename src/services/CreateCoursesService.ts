@@ -31,7 +31,7 @@ export default class CreateCoursesService {
       throw new AppError('Campus not found!', 400);
     }
 
-    const courseExist = await this.coursesRepository.findOneByName(nameUpper);
+    const courseExist = await this.coursesRepository.findOneByName(nameUpper, campus_id);
 
     if (courseExist) {
       throw new AppError('Curso já cadastrado no campus!', 400);

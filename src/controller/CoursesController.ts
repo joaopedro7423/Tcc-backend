@@ -4,7 +4,6 @@ import CoursesRepository from '../repositories/CoursesRepository';
 import CampusRepository from '../repositories/CampusRepository';
 import CreateCoursesService from '../services/CreateCoursesService';
 
-import UpdateProjectService from '../services/UpdateProjectService';
 import UpdateCourseService from '../services/UpdateCourseService';
 import DeleteCourseService from '../services/DeleteCourseService';
 
@@ -14,6 +13,15 @@ export default class CoursesController {
     const coursesRepository = new CoursesRepository();
 
     const courses = await coursesRepository.findAll();
+
+    return res.json(courses);
+  }
+
+  public async show(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const coursesRepository = new CoursesRepository();
+
+    const courses = await coursesRepository.findAllByCampusId(id);
 
     return res.json(courses);
   }

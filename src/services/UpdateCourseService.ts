@@ -33,12 +33,12 @@ export default class UpdateCourseService {
     const nameUpper = name.toUpperCase().trim();
 
     if (nameUpper !== course.name) {
-      const campusExist = await this.coursesRepository.findOneByName(nameUpper);
+      const campusExist = await this.coursesRepository.findOneByName(nameUpper, campus_id);
       if (campusExist) {
         throw new AppError('Esse campus já é cadastrado!', 401);
       }
     } else {
-      throw new AppError('Campus com nome fornecido igual!', 401);
+      throw new AppError('Curso com nome fornecido igual!', 401);
     }
 
     const campusExist = await this.campusRepository.findById(campus_id);
