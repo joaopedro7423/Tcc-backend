@@ -1,93 +1,73 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import ProjectsRepository from "../repositories/ProjectsRepository";
-import UsersRepository from "../repositories/UsersRepository";
+import ProposalsRepository from '../repositories/ProposalsRepository';
+import UsersRepository from '../repositories/UsersRepository';
 
-import CreateProjectService from "../services/CreateProjectService";
-import ShowProjectService from "../services/ShowProjectService";
-import ListAllProjectsService from "../services/ListAllProjectsService";
-import UpdateProjectService from "../services/UpdateProjectService";
-import UpdateProjectStatusService from "../services/UpdateProjectStatusService";
-import UploadLogoOfProjectProjectService from "../services/UploadLogoOfProjectProjectService";
+import ListAllProposalsService from '../services/ListAllProposalsService';
+import ShowProposalService from '../services/ShowProposalService';
+import CreateProposalService from '../services/CreateProposalService';
+import UpdateProposalService from '../services/UpdateProposalService';
+import UpdateProposalStatusService from '../services/UpdateProposalStatusService';
+import DeleteProposalService from '../services/DeleteProposalService';
 
 /*
 Aqui que se utiliza as regras de negócios 
 */
 
 export default class ProposalsController {
-  //para achar todos os users listar claro
   public async index(req: Request, res: Response): Promise<Response> {
-    const projectsRepository = new ProjectsRepository();
+    const proposalsRepository = new ProposalsRepository();
 
-    const projectsService = new ListAllProjectsService(projectsRepository);
+    const proposalService = new ListAllProposalsService(proposalsRepository);
 
-    const projects = await projectsService.execute();
+    const projects = await proposalService.execute();
 
     return res.json(projects);
   }
 
   public async show(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const projectsRepository = new ProjectsRepository();
+    const proposalsRepository = new ProposalsRepository();
 
-    const projectsService = new ShowProjectService(projectsRepository);
+    const proposalService = new ShowProposalService(proposalsRepository);
 
-    const project = await projectsService.execute(id);
+    const project = await proposalService.execute(id);
 
     return res.json(project);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, user_id, description, student_id } = request.body;
-    const projectsRepository = new ProjectsRepository();
+    const { title, user_create_id, description } = request.body;
+    const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
-    const createProject = new CreateProjectService(
-      projectsRepository,
-      userRepository
+    const createProject = new CreateProposalService(
+      proposalsRepository,
+      userRepository,
     );
 
     const project = await createProject.execute({
-      name,
-      student_id,
-      user_id,
+      title,
+      user_create_id,
       description,
-      logo: request.file?.filename,
     });
 
     return response.status(201).json(project);
   }
 
-  public async uploadLogo(
-    request: Request,
-    response: Response
-  ): Promise<Response> {
-    const { id } = request.params;
-    const { filename } = request.file;
-    const projectsRepository = new ProjectsRepository();
-    const service = new UploadLogoOfProjectProjectService(projectsRepository);
-
-    const project = await service.execute({
-      id,
-      logo: filename,
-    });
-
-    return response.json(project);
-  }
-
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description, user_id } = request.body;
-    const projectsRepository = new ProjectsRepository();
+    const { title, description, user_create_id } = request.body;
+    const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
-    const updateProject = new UpdateProjectService(
-      projectsRepository,
-      userRepository
+    const updateProject = new UpdateProposalService(
+      proposalsRepository,
+      userRepository,
     );
 
     const project = await updateProject.execute({
       id,
-      name,
-      user_id,
+      title,
+      user_create_id,
       description,
     });
 
@@ -96,19 +76,29 @@ export default class ProposalsController {
 
   public async chengeStatus(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
     const { id } = request.params;
-    const { status } = request.body;
-    const projectsRepository = new ProjectsRepository();
+    const { user_accept_id } = request.body;
+    const proposalsRepository = new ProposalsRepository();
 
-    const updateProject = new UpdateProjectStatusService(projectsRepository);
+    const updateProject = new UpdateProposalStatusService(proposalsRepository);
 
     const project = await updateProject.execute({
       id,
-      status,
+      user_accept_id,
     });
 
     return response.json(project);
+  }
+
+  public async destroy(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    const proposalsRepository = new ProposalsRepository();
+    const destroyProposal = new DeleteProposalService(proposalsRepository);
+    await destroyProposal.execute(id);
+
+    return res.status(204).send();
   }
 }
