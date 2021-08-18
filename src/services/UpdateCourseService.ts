@@ -26,6 +26,10 @@ export default class UpdateCourseService {
     this.campusRepository = campusRepository;
   }
   public async execute({ id, name, campus_id }: IRequest): Promise<Course> {
+
+ if (!validator.isUUID(id)) {
+      throw new AppError('Codigo do curso invalido!', 400);
+    }
     const course = await this.coursesRepository.findById(id);
 
     if (!course) {
@@ -42,8 +46,7 @@ export default class UpdateCourseService {
 
     if (nameUpper !== course.name) {
       const campusExist = await this.coursesRepository.findOneByName(
-        nameUpper,
-        campus_id,
+        nameUpper
       );
       if (campusExist) {
         throw new AppError('Esse campus já é cadastrado!', 401);

@@ -1,5 +1,7 @@
-import Campus from '../models/Campus';
+import validator from 'validator';
+
 import AppError from '../errors/AppError';
+import Campus from '../models/Campus';
 
 import ICampusRepository from '../repositories/ICampusRepository';
 import CampusRepository from '../repositories/CampusRepository';
@@ -17,6 +19,9 @@ export default class UpdateCampusService {
     this.campusRepository = campusRepository;
   }
   public async execute({ id, name }: Request): Promise<Campus> {
+    if (!validator.isUUID(id)) {
+      throw new AppError('Codigo do campus invalido!', 400);
+    }
     const campus = await this.campusRepository.findById(id);
 
     //se o cliente não existir retorna um error
