@@ -2,7 +2,6 @@ import { Router } from 'express';
 import ProposalsController from '../controller/ProposalsController';
 import { authenticate } from '../middleware/auth';
 
-
 const proposalRoutes = Router();
 
 const proposalController = new ProposalsController();
@@ -13,15 +12,17 @@ proposalRoutes.get('/', proposalController.index);
 
 //proposalRoutes.get("/", authenticate, proposalController.index); // assim se autentica individualmente
 
-proposalRoutes.post('/', proposalController.create); 
+proposalRoutes.post('/', proposalController.create);
 
-//proposalRoutes.put('/:id/upload', proposalController.uploadLogo); 
+//proposalRoutes.put('/:id/upload', proposalController.uploadLogo);
 
 proposalRoutes.put('/:id', proposalController.update);
 
 proposalRoutes.get('/:id', proposalController.show);
 
 proposalRoutes.patch('/:id', proposalController.chengeStatus); //patch é recomendado para alterar apenas 1 campo como nesse caso
+
+proposalRoutes.delete('/:id', proposalController.destroy);
 
 export default proposalRoutes;
 
