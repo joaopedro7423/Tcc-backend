@@ -19,7 +19,7 @@ export class CreateProposals1629248192912 implements MigrationInterface {
           },
           {
             name: 'description',
-            type: 'varchar',
+            type: "text",
           },
           {
             name: 'user_create_id',
