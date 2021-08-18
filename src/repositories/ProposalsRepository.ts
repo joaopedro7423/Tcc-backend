@@ -11,14 +11,11 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findAll(): Promise<Proposal[]> {
-    return this.ormRepository.find({
-      relations: ['user'],
-    });
+    return this.ormRepository.find();
   }
+
   public async findById(id: string): Promise<Proposal | undefined> {
-    return this.ormRepository.findOne(id, {
-      relations: ['user'],
-    });
+    return this.ormRepository.findOne(id);
   }
   public async create({
     title,
@@ -37,6 +34,10 @@ class ProposalsRepository implements IProposalsRepository {
 
   public async save(proposal: Proposal): Promise<Proposal> {
     return this.ormRepository.save(proposal);
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.ormRepository.delete(id);
   }
 }
 
