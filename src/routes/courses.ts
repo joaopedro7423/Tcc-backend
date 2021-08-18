@@ -22,7 +22,7 @@ coursesRoutes.get('/', campusController.index);
  // listar todos os cursos
 
  //listar todos os cursos dependentes do campo id
-coursesRoutes.get('/campus_id/:id', campusController.show); // listar todos os campus
+//coursesRoutes.get('/campus_id/:id', campusController.show); // listar todos os campus
 
 coursesRoutes.put('/:id', campusController.update);
 

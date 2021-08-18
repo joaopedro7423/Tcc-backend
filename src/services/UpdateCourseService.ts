@@ -46,7 +46,8 @@ export default class UpdateCourseService {
 
     if (nameUpper !== course.name) {
       const campusExist = await this.coursesRepository.findOneByName(
-        nameUpper
+        nameUpper,
+        campus_id
       );
       if (campusExist) {
         throw new AppError('Esse campus já é cadastrado!', 401);
