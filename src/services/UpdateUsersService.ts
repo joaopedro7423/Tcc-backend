@@ -1,4 +1,6 @@
 import { hash } from 'bcrypt';
+import validator from 'validator';
+
 import User from '../models/Users';
 import AppError from '../errors/AppError';
 
@@ -51,6 +53,10 @@ export default class UpdateUsersService {
       user.password = passwordHash;
     } else {
       user.password = password;
+    }
+
+    if (!validator.isUUID(course_id)) {
+      throw new AppError('Codigo do curso invalido!', 400);
     }
 
     //caso se passe dessas 2 condições

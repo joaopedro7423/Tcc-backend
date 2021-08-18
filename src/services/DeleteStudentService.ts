@@ -1,4 +1,5 @@
-import { hash } from "bcrypt";
+import validator from 'validator';
+
 import AppError from "../errors/AppError";
 
 import IStudentRepository from "../repositories/IStudentRepository";
@@ -14,6 +15,11 @@ export default class DeleteStudentService {
 
     }
     public async execute(id: string): Promise<void> {
+
+      
+      if (!validator.isUUID(id)) {
+        throw new AppError('Codigo  invalido!', 400);
+      }
         const userExist = await this.studentRepository.findById(id)
 
         if(!userExist){

@@ -1,4 +1,7 @@
+import validator from 'validator';
+
 import AppError from '../errors/AppError';
+
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
 import CoursesRepository from '../repositories/CoursesRepository';
@@ -11,6 +14,11 @@ export default class DeleteCourseService {
     this.courseRepository = courseRepository;
   }
   public async execute(id: string): Promise<void> {
+    
+    if (!validator.isUUID(id)) {
+      throw new AppError('Codigo  invalido!', 400);
+    }
+
     const courseExist = await this.courseRepository.findById(id);
 
     if (!courseExist) {

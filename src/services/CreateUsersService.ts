@@ -1,4 +1,6 @@
 import { hash } from 'bcrypt';
+import validator from 'validator';
+
 import User from '../models/Users';
 import AppError from '../errors/AppError';
 
@@ -43,6 +45,10 @@ export default class CreateUsersService {
     }
 
     const passwordHash = await hash(password, 8);
+
+    if (!validator.isUUID(course_id)) {
+      throw new AppError('Codigo do curso invalido!', 400);
+    }
 
     const courseExist = await this.courseRepository.findById(course_id)
 

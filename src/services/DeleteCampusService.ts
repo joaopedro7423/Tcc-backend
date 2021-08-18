@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import AppError from '../errors/AppError';
 
 import ICampusRepository from '../repositories/ICampusRepository';
@@ -14,6 +16,10 @@ export default class DeleteCampusService {
 
     }
     public async execute(id: string): Promise<void> {
+
+      if (!validator.isUUID(id)) {
+        throw new AppError('Codigo  invalido!', 400);
+      }
         const campusExist = await this.campusRepository.findById(id)
 
         if(!campusExist){

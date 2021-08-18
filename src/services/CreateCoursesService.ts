@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import AppError from '../errors/AppError';
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
@@ -24,6 +26,10 @@ export default class CreateCoursesService {
   }
   public async execute({ name, campus_id }: IRequest): Promise<Course> {
     const nameUpper = name.toUpperCase().trim();
+
+    if (!validator.isUUID(campus_id)) {
+      throw new AppError('Codigo campus invalido!', 400);
+    }
 
     const campusExist = await this.campusRepository.findById(campus_id);
 

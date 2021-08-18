@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import AppError from "../errors/AppError";
 
 import IUsersRepository from "../repositories/IUsersRepository";
@@ -13,6 +15,11 @@ export default class DeleteUsersService {
 
     }
     public async execute(id: string): Promise<void> {
+
+      if (!validator.isUUID(id)) {
+        throw new AppError('Codigo  invalido!', 400);
+      }
+      
         const userExist = await this.userRepository.findById(id)
 
         if(!userExist){
