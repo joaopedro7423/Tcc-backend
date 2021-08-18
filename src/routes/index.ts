@@ -5,6 +5,7 @@ import projectRoutes from "./project";
 import studentRoutes from "./student";
 import campusRoutes from "./campus";
 import coursesRoutes from "./courses";
+import proposalRoutes from "./proposals";
 
 
 const routes = Router();
@@ -20,6 +21,7 @@ routes.use(`${prefixRoutes}/sessions`, sessionRoutes);
 routes.use(`${prefixRoutes}/projects`, projectRoutes);
 routes.use(`${prefixRoutes}/campus`, campusRoutes);
 routes.use(`${prefixRoutes}/courses`, coursesRoutes);
+routes.use(`${prefixRoutes}/proposals`, proposalRoutes);
 
 
 export default routes;
