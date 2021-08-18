@@ -10,6 +10,10 @@ import UpdateProjectService from "../services/UpdateProjectService";
 import UpdateProjectStatusService from "../services/UpdateProjectStatusService";
 import UploadLogoOfProjectProjectService from "../services/UploadLogoOfProjectProjectService";
 
+/*
+Aqui que se utiliza as regras de negócios 
+*/
+
 export default class ProposalsController {
   //para achar todos os users listar claro
   public async index(req: Request, res: Response): Promise<Response> {
