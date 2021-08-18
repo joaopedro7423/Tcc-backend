@@ -1,3 +1,5 @@
+import validator from 'validator';
+
 import AppError from '../errors/AppError';
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
@@ -30,10 +32,19 @@ export default class UpdateCourseService {
       throw new AppError('Course not found!', 400);
     }
 
+    //console.log(validator.isUUID(campus_id))
+
+    if (!validator.isUUID(campus_id)) {
+      throw new AppError('Codigo do campus invalido!', 400);
+    }
+
     const nameUpper = name.toUpperCase().trim();
 
     if (nameUpper !== course.name) {
-      const campusExist = await this.coursesRepository.findOneByName(nameUpper, campus_id);
+      const campusExist = await this.coursesRepository.findOneByName(
+        nameUpper,
+        campus_id,
+      );
       if (campusExist) {
         throw new AppError('Esse campus já é cadastrado!', 401);
       }
