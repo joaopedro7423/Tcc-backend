@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import ProposalsRepository from '../repositories/ProposalsRepository';
 import UsersRepository from '../repositories/UsersRepository';
 
-import ListAllProposalsService from '../services/ListAllProposalsService';
+import ListAllProposalsService from '../services/ListProposalsServiceByRole';
 import ShowProposalService from '../services/ShowProposalService';
 import CreateProposalService from '../services/CreateProposalService';
 import UpdateProposalService from '../services/UpdateProposalService';
