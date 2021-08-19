@@ -20,6 +20,8 @@ proposalRoutes.put('/:id', proposalController.update);
 
 proposalRoutes.get('/:id', proposalController.show);
 
+proposalRoutes.get('/role/:role', proposalController.listAllNullByRole);
+
 proposalRoutes.patch('/:id', proposalController.chengeStatus); //patch é recomendado para alterar apenas 1 campo como nesse caso
 
 proposalRoutes.delete('/:id', proposalController.destroy);
