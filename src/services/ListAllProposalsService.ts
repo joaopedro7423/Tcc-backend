@@ -10,16 +10,28 @@ export default class ListAllProposalsService {
     this.proposalRepository = proposalRepository;
   }
   public async execute(role: string): Promise<Proposal[]> {
-    //console.log(role);
+    // console.log(role);
 
+    switch (role) {
+      case 'adm':
+        return await this.proposalRepository.findAll();
+      case 'student':
+        return await this.proposalRepository.findAllNullByRole('professor');
+      case 'professor':
+        return await this.proposalRepository.findAllNullByRole('student');
+
+      default:
+        throw new AppError('Role invalido!', 400);
+    }
+    /*
     if (role == 'adm') {
       return await this.proposalRepository.findAll();
-    } else if (role = 'student') {
+    } else if (role == 'student') {
       return await this.proposalRepository.findAllNullByRole('professor');
-    } else if (role = 'professor') {
+    } else if (role == 'professor') {
       return await this.proposalRepository.findAllNullByRole('student');
     } else {
       throw new AppError('Role invalido!', 400);
-    }
+    }*/
   }
 }

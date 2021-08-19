@@ -9,7 +9,7 @@ const proposalController = new ProposalsController();
 
 proposalRoutes.use(authenticate);
 
-proposalRoutes.get('/',authRole(["adm", "professor"]),proposalController.index);
+proposalRoutes.get('/',proposalController.index);
 
 //proposalRoutes.get("/", authenticate, proposalController.index); // assim se autentica individualmente
 
