@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, IsNull, Like, Repository } from 'typeorm';
 import ICreateProposalsDTO from '../dtos/ICreateProposalsDTO';
 import Proposal from '../models/Proposals';
 import IProposalsRepository from './IProposalsRepository';
@@ -11,12 +11,27 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findAll(): Promise<Proposal[]> {
-    return this.ormRepository.find();
+    
+    return await this.ormRepository.find()
+    
+   
+  }
+
+  public async findAllNullByRole(role: string): Promise<Proposal[] | undefined> {
+    const result = await this.ormRepository
+    .createQueryBuilder('pro')
+    .innerJoinAndSelect('pro.user_create', 'user_create')
+    .where('user_create.role = :id', { id: role })
+    .andWhere('pro.user_accept_id is null')
+    .getMany();
+
+  return result;
   }
 
   public async findById(id: string): Promise<Proposal | undefined> {
     return this.ormRepository.findOne(id);
   }
+
   public async create({
     title,
     description,
