@@ -9,7 +9,8 @@ import CreateProposalService from '../services/CreateProposalService';
 import UpdateProposalService from '../services/UpdateProposalService';
 import UpdateProposalStatusService from '../services/UpdateProposalStatusService';
 import DeleteProposalService from '../services/DeleteProposalService';
-import ListAllNullByRoleProposalsService from '../services/ListAllNullByRoleProposalsService';
+
+import AppError from '../errors/AppError';
 
 /*
 Aqui que se utiliza as regras de negócios 
@@ -17,28 +18,13 @@ Aqui que se utiliza as regras de negócios
 
 export default class ProposalsController {
   public async index(req: Request, res: Response): Promise<Response> {
+    //console.log(req.user);
+
     const proposalsRepository = new ProposalsRepository();
 
     const proposalService = new ListAllProposalsService(proposalsRepository);
 
-    const projects = await proposalService.execute();
-
-    return res.json(projects);
-  }
-
-  public async listAllNullByRole(
-    req: Request,
-    res: Response,
-  ): Promise<Response> {
-    const { role } = req.params;
-
-    const proposalsRepository = new ProposalsRepository();
-
-    const proposalService = new ListAllNullByRoleProposalsService(
-      proposalsRepository,
-    );
-
-    const projects = await proposalService.execute(role);
+    const projects = await proposalService.execute(req.user.role);
 
     return res.json(projects);
   }

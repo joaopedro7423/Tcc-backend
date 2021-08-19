@@ -1,5 +1,6 @@
 import IProposalsRepository from '../repositories/IProposalsRepository';
 import Proposal from '../models/Proposals';
+import AppError from '../errors/AppError';
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class ListAllProposalsService {
@@ -8,9 +9,17 @@ export default class ListAllProposalsService {
   constructor(proposalRepository: IProposalsRepository) {
     this.proposalRepository = proposalRepository;
   }
-  public async execute(): Promise<Proposal[]> {
-    const proposal = await this.proposalRepository.findAll();
+  public async execute(role: string): Promise<Proposal[]> {
+    //console.log(role);
 
-    return proposal;
+    if (role == 'adm') {
+      return await this.proposalRepository.findAll();
+    } else if (role = 'student') {
+      return await this.proposalRepository.findAllNullByRole('professor');
+    } else if (role = 'professor') {
+      return await this.proposalRepository.findAllNullByRole('student');
+    } else {
+      throw new AppError('Role invalido!', 400);
+    }
   }
 }
