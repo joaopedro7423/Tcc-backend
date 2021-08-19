@@ -21,7 +21,11 @@ export const authenticate = async (
     const payload = jwt.verify(token, String(process.env.APP_SECRET)) as ICustomJWTPayload;
 
     req.body.user_id = payload.id
-    
+    //console.log(payload.role)
+   
+    req.user = {role: payload.role, id: payload.id}
+
+   // console.log(req.user)
     next();
   } catch (error) {
     throw new AppError("JWT token is invalid!", 401);
