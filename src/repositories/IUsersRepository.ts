@@ -1,5 +1,5 @@
-import CreateUsersDTO from "../dtos/CreateUsersDTO";
-import User from "../models/Users";
+import CreateUsersDTO from '../dtos/CreateUsersDTO';
+import User from '../models/Users';
 
 export default interface IUsersRepository {
   findByEmail(email: string): Promise<User | undefined>;
@@ -10,5 +10,4 @@ export default interface IUsersRepository {
   create(CreateUsersDTO: CreateUsersDTO): Promise<User>;
   save(user: User): Promise<User>;
   delete(id: string): Promise<void>;
-
 }
