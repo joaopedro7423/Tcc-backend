@@ -2,7 +2,7 @@ import { Router } from "express";
 import userRoutes from "./user";
 import sessionRoutes from "./session";
 import projectRoutes from "./project";
-import studentRoutes from "./student";
+import notificationRoutes from "./notifications";
 import campusRoutes from "./campus";
 import coursesRoutes from "./courses";
 import proposalRoutes from "./proposals";
@@ -16,7 +16,7 @@ routes.get("/", (request, response) => {
 });
 
 routes.use(`${prefixRoutes}/users`, userRoutes);
-routes.use(`${prefixRoutes}/students`, studentRoutes);
+routes.use(`${prefixRoutes}/notifications`, notificationRoutes);
 routes.use(`${prefixRoutes}/sessions`, sessionRoutes);
 routes.use(`${prefixRoutes}/projects`, projectRoutes);
 routes.use(`${prefixRoutes}/campus`, campusRoutes);

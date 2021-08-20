@@ -9,7 +9,6 @@ interface IRequest {
   name: string;
   logo?: string; 
   user_id: string;
-  student_id: string;
   description: string;
 }
 
@@ -29,7 +28,6 @@ export default class CreateProjectService {
   public async execute({
     name,
     user_id,
-    student_id,
     description,
     logo,
   }: IRequest): Promise<Project> {
@@ -42,7 +40,6 @@ export default class CreateProjectService {
     const project = await this.projectRepository.create({
       name,
       user_id,
-      student_id,
       description,
       logo,
       status: ProjectStatus.NEW,

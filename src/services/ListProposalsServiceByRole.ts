@@ -15,10 +15,10 @@ export default class ListAllProposalsService {
     switch (role) {
       case 'adm':
         return await this.proposalRepository.findAll();
-      case 'student':
+      case 'notification':
         return await this.proposalRepository.findAllNullByRole('professor');
       case 'professor':
-        return await this.proposalRepository.findAllNullByRole('student');
+        return await this.proposalRepository.findAllNullByRole('notification');
 
       default:
         throw new AppError('Role invalido!', 400);
@@ -26,10 +26,10 @@ export default class ListAllProposalsService {
     /*
     if (role == 'adm') {
       return await this.proposalRepository.findAll();
-    } else if (role == 'student') {
+    } else if (role == 'notification') {
       return await this.proposalRepository.findAllNullByRole('professor');
     } else if (role == 'professor') {
-      return await this.proposalRepository.findAllNullByRole('student');
+      return await this.proposalRepository.findAllNullByRole('notification');
     } else {
       throw new AppError('Role invalido!', 400);
     }*/

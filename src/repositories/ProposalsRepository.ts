@@ -12,11 +12,10 @@ class ProposalsRepository implements IProposalsRepository {
 
   public async findAll(): Promise<Proposal[]> {
     return await this.ormRepository.find();
-
   }
 
   public async findAllNullByRole(
-    role: string
+    role: string,
   ): Promise<Proposal[] | undefined> {
     return await this.ormRepository
       .createQueryBuilder('pro')
