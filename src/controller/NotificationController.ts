@@ -17,7 +17,7 @@ export default class NotificationController {
 
   public async create(req: Request, res: Response): Promise<Response> {
     const { description, user_id } = req.body;
-
+    //console.log(user_id)
     const notificationRepository = new NotificationRepository();
     const createnotification = new CreatenotificationService(
       notificationRepository,

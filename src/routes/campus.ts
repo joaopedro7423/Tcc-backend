@@ -7,10 +7,10 @@ const campusRoutes = Router();
 
 const campusController = new CampusController();
 
-campusRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
+//campusRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
 
 
-campusRoutes.use(authRole(["professor", "adm"])); 
+//campusRoutes.use(authRole(["professor", "adm"])); 
 //campusRoutes.use(onlyProfessor); //para um grupo específico ter acesso a rotas
 //campusRoutes.use(); //para um grupo específico ter acesso a rotas
 

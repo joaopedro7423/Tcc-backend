@@ -23,7 +23,7 @@ export const authenticate = async (
       String(process.env.APP_SECRET),
     ) as ICustomJWTPayload;
 
-    req.body.user_id = payload.id;
+    //req.body.user_id = payload.id;
     //console.log(payload.role)
 
     req.user = {

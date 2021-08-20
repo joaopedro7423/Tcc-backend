@@ -18,7 +18,20 @@ export default class NotificationRepository implements INotificationRepository {
   }
 
   public async findAll(): Promise<Notification[]> {
-    return this.ormRepository.find();
+    return this.ormRepository.find({
+      relations: ['user' ],
+      where: {
+        user: { course: { id: '7e491310-d263-440c-9fa0-eafd2e097070' } },
+      },
+    });
+  }
+
+  public async findByCourse(course: string): Promise<Notification[]> {
+    return this.ormRepository
+      .createQueryBuilder('not')
+      .innerJoinAndSelect('not.user', 'user')
+      .where('user.course_id = :id', { id: course })
+      .getMany();
   }
 
   public async create({

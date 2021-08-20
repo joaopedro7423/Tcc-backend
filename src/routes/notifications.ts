@@ -2,15 +2,16 @@ import { Router } from 'express';
 import { authenticate } from '../middleware/auth';
 
 import NotificationController from '../controller/NotificationController';
+import { authRole } from '../middleware/authRole';
 
 const notificationRoutes = Router();
 
 const notificationController = new NotificationController();
 
-notificationRoutes.post('/', notificationController.create);
 
 notificationRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
 
+notificationRoutes.post('/',authRole(["professor"]), notificationController.create);
 //notificationRoutes.get("/", authenticate, NotificationController.index); // assim se autentica individualmente
 
 notificationRoutes.get('/', notificationController.index); // listar todos os usuarios
