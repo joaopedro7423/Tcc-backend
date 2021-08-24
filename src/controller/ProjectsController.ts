@@ -1,14 +1,11 @@
 import { Request, Response } from 'express';
 
 import ProjectsRepository from '../repositories/ProjectsRepository';
-import UsersRepository from '../repositories/UsersRepository';
 
 import CreateProjectService from '../services/CreateProjectService';
 import ShowProjectService from '../services/ShowProjectService';
 import ListAllProjectsService from '../services/ListAllProjectsService';
 import UpdateProjectService from '../services/UpdateProjectService';
-import UpdateProjectStatusService from '../services/UpdateProjectStatusService';
-import UploadLogoOfProjectProjectService from '../services/UploadLogoOfProjectProjectService';
 
 export default class ProjectsController {
   //para achar todos os users listar claro
@@ -66,18 +63,13 @@ export default class ProjectsController {
 */
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { name, description, user_id } = request.body;
+    const { title, description } = request.body;
     const projectsRepository = new ProjectsRepository();
-    const userRepository = new UsersRepository();
-    const updateProject = new UpdateProjectService(
-      projectsRepository,
-      userRepository,
-    );
+    const updateProject = new UpdateProjectService(projectsRepository);
 
     const project = await updateProject.execute({
       id,
-      name,
-      user_id,
+      title,
       description,
     });
 
