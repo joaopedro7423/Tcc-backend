@@ -19,7 +19,7 @@ export class CreateProposals1629248192912 implements MigrationInterface {
           },
           {
             name: 'description',
-            type: "text",
+            type: 'text',
           },
           {
             name: 'user_create_id',
@@ -27,6 +27,11 @@ export class CreateProposals1629248192912 implements MigrationInterface {
           },
           {
             name: 'user_accept_id',
+            type: 'uuid',
+            isNullable: true,
+          },
+          {
+            name: 'project_id',
             type: 'uuid',
             isNullable: true,
           },
@@ -55,6 +60,14 @@ export class CreateProposals1629248192912 implements MigrationInterface {
             columnNames: ['user_accept_id'],
             referencedColumnNames: ['id'],
             referencedTableName: 'users',
+            onDelete: 'SET NULL',
+            onUpdate: 'CASCADE',
+          },
+          {
+            name: 'ProposalProject',
+            columnNames: ['project_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'projects',
             onDelete: 'SET NULL',
             onUpdate: 'CASCADE',
           },
