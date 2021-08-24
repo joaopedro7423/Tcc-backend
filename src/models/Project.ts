@@ -16,23 +16,7 @@ export default class Project {
   id: string;
 
   @Column()
-  name: string;
-
-  @Column()
-  user_id: string;
-
-  @ManyToOne(() => User)
-  @JoinColumn({name: 'user_id'})
-  user: string;
-
-
-  @Column({
-    type: "varchar",
-  })
-  status: ProjectStatus;
-
-  @Column()
-  logo: string;
+  title: string;
 
   @Column()
   description: string;
