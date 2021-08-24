@@ -11,6 +11,7 @@ import UpdateProposalStatusService from '../services/UpdateProposalStatusService
 import DeleteProposalService from '../services/DeleteProposalService';
 
 import AppError from '../errors/AppError';
+import ProjectsRepository from '../repositories/ProjectsRepository';
 
 /*
 Aqui que se utiliza as regras de negócios 
@@ -85,8 +86,12 @@ export default class ProposalsController {
     const { id } = request.params;
     const { user_accept_id } = request.body;
     const proposalsRepository = new ProposalsRepository();
+    const projectRepository = new ProjectsRepository();
 
-    const updateProject = new UpdateProposalStatusService(proposalsRepository);
+    const updateProject = new UpdateProposalStatusService(
+      proposalsRepository,
+      projectRepository,
+    );
 
     const project = await updateProject.execute({
       id,
