@@ -8,16 +8,27 @@ import UpdatNotificationService from '../services/UpdatnotificationService';
 export default class NotificationController {
   //para achar todos os notification listar claro
   public async index(req: Request, res: Response): Promise<Response> {
+    const { course_id, role } = req.user;
+
     const notificationRepository = new NotificationRepository();
 
-    const notification = await notificationRepository.findAll();
+    if (role == 'adm') {
+      const notification = await notificationRepository.findAll();
+
+      return res.json(notification);
+    }
+
+    const notification = await notificationRepository.findByCourse(course_id);
 
     return res.json(notification);
   }
 
   public async create(req: Request, res: Response): Promise<Response> {
-    const { description, user_id } = req.body;
+    const { description } = req.body;
+
+    const { id } = req.user;
     //console.log(user_id)
+    const user_id = id;
     const notificationRepository = new NotificationRepository();
     const createnotification = new CreatenotificationService(
       notificationRepository,

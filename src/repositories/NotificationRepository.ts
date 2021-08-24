@@ -1,3 +1,4 @@
+import { request } from 'express';
 import { getRepository, Repository } from 'typeorm';
 import ICreateNotificationDTO from '../dtos/ICreateNotificationDTO';
 import Notification from '../models/Notifications';
@@ -18,12 +19,7 @@ export default class NotificationRepository implements INotificationRepository {
   }
 
   public async findAll(): Promise<Notification[]> {
-    return this.ormRepository.find({
-      relations: ['user' ],
-      where: {
-        user: { course: { id: '7e491310-d263-440c-9fa0-eafd2e097070' } },
-      },
-    });
+    return this.ormRepository.find();
   }
 
   public async findByCourse(course: string): Promise<Notification[]> {
