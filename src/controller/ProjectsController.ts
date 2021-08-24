@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import ProjectsRepository from "../repositories/ProjectsRepository";
-import UsersRepository from "../repositories/UsersRepository";
+import ProjectsRepository from '../repositories/ProjectsRepository';
+import UsersRepository from '../repositories/UsersRepository';
 
-import CreateProjectService from "../services/CreateProjectService";
-import ShowProjectService from "../services/ShowProjectService";
-import ListAllProjectsService from "../services/ListAllProjectsService";
-import UpdateProjectService from "../services/UpdateProjectService";
-import UpdateProjectStatusService from "../services/UpdateProjectStatusService";
-import UploadLogoOfProjectProjectService from "../services/UploadLogoOfProjectProjectService";
+import CreateProjectService from '../services/CreateProjectService';
+import ShowProjectService from '../services/ShowProjectService';
+import ListAllProjectsService from '../services/ListAllProjectsService';
+import UpdateProjectService from '../services/UpdateProjectService';
+import UpdateProjectStatusService from '../services/UpdateProjectStatusService';
+import UploadLogoOfProjectProjectService from '../services/UploadLogoOfProjectProjectService';
 
 export default class ProjectsController {
   //para achar todos os users listar claro
@@ -34,27 +34,22 @@ export default class ProjectsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name, user_id, description } = request.body;
+    const { title, description } = request.body;
     const projectsRepository = new ProjectsRepository();
-    const userRepository = new UsersRepository();
-    const createProject = new CreateProjectService(
-      projectsRepository,
-      userRepository
-    );
+
+    const createProject = new CreateProjectService(projectsRepository);
 
     const project = await createProject.execute({
-      name,
-      user_id,
+      title,
       description,
-      logo: request.file?.filename,
     });
 
     return response.status(201).json(project);
   }
-
+  /*
   public async uploadLogo(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
     const { id } = request.params;
     const { filename } = request.file;
@@ -68,7 +63,7 @@ export default class ProjectsController {
 
     return response.json(project);
   }
-
+*/
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { name, description, user_id } = request.body;
@@ -76,7 +71,7 @@ export default class ProjectsController {
     const userRepository = new UsersRepository();
     const updateProject = new UpdateProjectService(
       projectsRepository,
-      userRepository
+      userRepository,
     );
 
     const project = await updateProject.execute({
@@ -88,10 +83,10 @@ export default class ProjectsController {
 
     return response.json(project);
   }
-
+  /*
   public async chengeStatus(
     request: Request,
-    response: Response
+    response: Response,
   ): Promise<Response> {
     const { id } = request.params;
     const { status } = request.body;
@@ -106,4 +101,5 @@ export default class ProjectsController {
 
     return response.json(project);
   }
+  */
 }
