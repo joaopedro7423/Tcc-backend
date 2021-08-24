@@ -34,6 +34,16 @@ export default class Project {
   @JoinColumn({ name: 'user_accept_id' })
   user_accept: User;
 
+  
+  @Column()
+  project_id: string;
+
+  @ManyToOne(() => Project)
+  @JoinColumn({ name: 'project_id' })
+  project: Project;
+
+  
+
   @CreateDateColumn()
   create_at: Date;
 
