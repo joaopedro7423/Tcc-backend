@@ -8,13 +8,15 @@ const notificationRoutes = Router();
 
 const notificationController = new NotificationController();
 
-
 notificationRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
 
-notificationRoutes.post('/',authRole(["professor"]), notificationController.create);
+notificationRoutes.get('/', notificationController.index); // listar todos os usuarios
+
 //notificationRoutes.get("/", authenticate, NotificationController.index); // assim se autentica individualmente
 
-notificationRoutes.get('/', notificationController.index); // listar todos os usuarios
+notificationRoutes.use(authRole(['professor', 'adm']));
+
+notificationRoutes.post('/', notificationController.create);
 
 //notificationRoutes.get("/pagineted", NotificationController.paginated); //listar os usuários por 10 em 10
 
