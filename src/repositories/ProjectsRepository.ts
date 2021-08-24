@@ -1,7 +1,7 @@
-import { getRepository, Repository } from "typeorm";
-import ICreateProjectDTO from "../dtos/ICreateProjectDTO";
-import Project from "../models/Project";
-import IProjectsRepository from "./IProjectsRepository";
+import { getRepository, Repository } from 'typeorm';
+import ICreateProjectDTO from '../dtos/ICreateProjectDTO';
+import Project from '../models/Project';
+import IProjectsRepository from './IProjectsRepository';
 
 class ProjectsRepository implements IProjectsRepository {
   private ormRepository: Repository<Project>;
@@ -12,27 +12,21 @@ class ProjectsRepository implements IProjectsRepository {
 
   public async findAll(): Promise<Project[]> {
     return this.ormRepository.find({
-      relations: ["user"],
+      relations: ['user'],
     });
   }
   public async findById(id: string): Promise<Project | undefined> {
     return this.ormRepository.findOne(id, {
-      relations: ["user"],
+      relations: ['user'],
     });
   }
   public async create({
-    name,
-    user_id,
+    title,
     description,
-    logo,
-    status,
   }: ICreateProjectDTO): Promise<Project> {
     const project = this.ormRepository.create({
-      name,
-      user_id,
+      title,
       description,
-      logo,
-      status,
     });
     await this.ormRepository.save(project);
     return project;
