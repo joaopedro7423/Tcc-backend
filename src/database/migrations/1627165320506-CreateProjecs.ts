@@ -22,15 +22,6 @@ export default class CreateProjecs1627165320506 implements MigrationInterface {
             type: 'text',
           },
           {
-            name: 'user_create_id',
-            type: 'uuid',
-          },
-          {
-            name: 'user_accept_id',
-            type: 'uuid',
-            isNullable: true,
-          },
-          {
             name: 'create_at',
             type: 'timestamp',
             default: 'now()',
@@ -39,24 +30,6 @@ export default class CreateProjecs1627165320506 implements MigrationInterface {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
-          },
-        ],
-        foreignKeys: [
-          {
-            name: 'ProjectUserCreate',
-            columnNames: ['user_create_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'users',
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
-          },
-          {
-            name: 'ProjectUserAccept',
-            columnNames: ['user_accept_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'users',
-            onDelete: 'SET NULL',
-            onUpdate: 'CASCADE',
           },
         ],
       }),
