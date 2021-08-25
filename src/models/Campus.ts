@@ -1,18 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import Courses  from "./Courses";
 
-@Entity('campus')
+@Entity("campus", { schema: "public" })
 export default class Campus {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @Column("character varying", { name: "name" })
+  name: string;
 
-    @Column()
-    name: string;
+  @Column("timestamp without time zone", {
+    name: "create_at",
+    default: () => "now()",
+  })
+  createAt: Date;
 
-    @CreateDateColumn()
-    create_at: Date;
+  @Column("timestamp without time zone", {
+    name: "updated_at",
+    default: () => "now()",
+  })
+  updatedAt: Date;
 
-    @UpdateDateColumn()
-    updated_at: Date;
-
+  @OneToMany(() => Courses, (courses) => courses.campus)
+  courses: Courses[];
 }

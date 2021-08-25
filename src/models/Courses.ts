@@ -3,17 +3,19 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import Campus from './Campus';
 import Users from './Users';
 
-@Entity('notifications', { schema: 'public' })
-export default class Notifications {
+@Entity('courses', { schema: 'public' })
+export default class Courses {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('text', { name: 'description' })
-  description: string;
+  @Column('character varying', { name: 'name' })
+  name: string;
 
   @Column('timestamp without time zone', {
     name: 'create_at',
@@ -27,11 +29,14 @@ export default class Notifications {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => Users, users => users.notifications, {
+  @ManyToOne(() => Campus, campus => campus.courses, {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   })
-  @JoinColumn([{ name: 'user_id', referencedColumnName: 'id' }])
-  user: Users;
+  @JoinColumn([{ name: 'campus_id', referencedColumnName: 'id' }])
+  campus: Campus;
 
+  @OneToMany(() => Users, users => users.course)
+  users: Users[];
+  
 }

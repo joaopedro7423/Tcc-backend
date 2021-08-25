@@ -1,52 +1,57 @@
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
-import User from './Users';
+import Projects from './Projects';
+import Users from './Users';
 
-@Entity('proposals')
-export default class Project {
+@Entity('proposals', { schema: 'public' })
+export default class Proposals {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('character varying', { name: 'title' })
   title: string;
 
-  @Column()
+  @Column('text', { name: 'description' })
   description: string;
 
-  @Column()
-  user_create_id: string;
+  @Column('timestamp without time zone', {
+    name: 'create_at',
+    default: () => 'now()',
+  })
+  createAt: Date;
 
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_create_id' })
-  user_create: User;
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'now()',
+  })
+  updatedAt: Date;
 
-  @Column()
+  @ManyToOne(() => Projects, projects => projects.proposals, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'project_id', referencedColumnName: 'id' }])
+  project: Projects;
+
+  @ManyToOne(() => Users, users => users.proposals, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'user_accept_id', referencedColumnName: 'id' }])
+  userAccept: Users;
+
+  @ManyToOne(() => Users, users => users.proposals2, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'user_create_id', referencedColumnName: 'id' }])
+  userCreate: Users;
+
   user_accept_id: string;
-
-  @ManyToOne(() => User)
-  @JoinColumn({ name: 'user_accept_id' })
-  user_accept: User;
-
-  
-  @Column()
-  project_id: string;
-
-  @ManyToOne(() => Project)
-  @JoinColumn({ name: 'project_id' })
-  project: Project;
-
-  
-
-  @CreateDateColumn()
-  create_at: Date;
-
-  @UpdateDateColumn()
-  updated_at: Date;
+  user_create_id: string;
 }

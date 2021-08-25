@@ -1,43 +1,59 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
+  Entity,
+  Index,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import Course from './Course';
+import Notifications from './Notifications';
+import Proposals from './Proposals';
+import Courses from './Courses';
 
-@Entity('users')
-export default class User {
+@Index('UQ_97672ac88f789774dd47f7c8be3', ['email'], { unique: true })
+@Entity('users', { schema: 'public' })
+export default class Users {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('character varying', { name: 'name' })
   name: string;
 
-  @Column({
-    unique: true,
-  })
+  @Column('character varying', { name: 'email', unique: true })
   email: string;
 
-  @Column()
+  @Column('character varying', { name: 'password' })
   password: string;
 
-  @Column()
+  @Column('character varying', { name: 'role' })
   role: string;
 
-  @Column()
-  course_id: string;
+  @Column('timestamp without time zone', {
+    name: 'create_at',
+    default: () => 'now()',
+  })
+  createAt: Date;
 
-  @ManyToOne(() => Course)
-  @JoinColumn({ name: 'course_id' })
-  course: Course;
+  @Column('timestamp without time zone', {
+    name: 'updated_at',
+    default: () => 'now()',
+  })
+  updatedAt: Date;
 
-  @CreateDateColumn()
-  create_at: Date;
+  @OneToMany(() => Notifications, notifications => notifications.user)
+  notifications: Notifications[];
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @OneToMany(() => Proposals, proposals => proposals.userAccept)
+  proposals: Proposals[];
+
+  @OneToMany(() => Proposals, proposals => proposals.userCreate)
+  proposals2: Proposals[];
+
+  @ManyToOne(() => Courses, courses => courses.users, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn([{ name: 'course_id', referencedColumnName: 'id' }])
+  course: Courses;
 }
