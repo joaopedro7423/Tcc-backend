@@ -10,6 +10,7 @@ export class CreateActivities1629893811193 implements MigrationInterface {
             name: 'id',
             type: 'uuid',
             isPrimary: true,
+            isGenerated: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },
@@ -23,7 +24,7 @@ export class CreateActivities1629893811193 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'varchar'
+            type: 'varchar',
           },
           {
             name: 'project_id',

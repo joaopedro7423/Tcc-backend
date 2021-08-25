@@ -10,6 +10,7 @@ export default class CreateNotifications1628557026370 implements MigrationInterf
             name: 'id',
             type: 'uuid',
             isPrimary: true,
+            isGenerated: true,
             generationStrategy: 'uuid',
             default: 'uuid_generate_v4()',
           },
