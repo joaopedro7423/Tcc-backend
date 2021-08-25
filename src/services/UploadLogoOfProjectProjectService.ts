@@ -1,9 +1,7 @@
-import AppError from "../errors/AppError";
+import AppError from '../errors/AppError';
+import  Projects  from '../models/Projects';
 
-import IProjectsRepository from "../repositories/IProjectsRepository";
-import Project from "../models/Project";
-import ProjectStatus from "../enums/projectStatus";
-import UsersRepository from "../repositories/UsersRepository";
+import IProjectsRepository from '../repositories/IProjectsRepository';
 
 interface IRequest {
   id: string;
@@ -17,18 +15,17 @@ export default class UploadLogoOfProjectProjectService {
   constructor(projectRepository: IProjectsRepository) {
     this.projectRepository = projectRepository;
   }
-  public async execute({ id, logo }: IRequest): Promise<Project> {
+  public async execute({ id, logo }: IRequest): Promise<Projects> {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {
-      throw new AppError("Project not found!", 400);
+      throw new AppError('Project not found!', 400);
     }
 
-     project.logo = logo;
+    project.logo = logo;
 
-     await this.projectRepository.save(project);
+    await this.projectRepository.save(project);
 
-     return project;
-    };
+    return project;
+  }
 }
-

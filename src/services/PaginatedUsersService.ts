@@ -1,5 +1,5 @@
 import IPaginated from "../interfaces/IPagineted";
-import User from "../models/Users";
+import  Users  from "../models/Users";
 import IUsersRepository from "../repositories/IUsersRepository";
 import UsersRepository from "../repositories/UsersRepository";
 
@@ -14,12 +14,12 @@ export default class PaginatedUsersService {
   constructor(userRepository: UsersRepository) {
     this.userRepository = userRepository;
   }
-  public async execute({ page }: Request): Promise<IPaginated<User>> {
+  public async execute({ page }: Request): Promise<IPaginated<Users>> {
     const [user, total] = await this.userRepository.findAllPaginated(page * 10);
 
     const totalPages = Math.ceil(total / 10);
 
-    const response: IPaginated<User> = {
+    const response: IPaginated<Users> = {
       data: user,
       totalElementos: total,
       page,

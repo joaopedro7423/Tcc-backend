@@ -1,8 +1,8 @@
 import AppError from "../errors/AppError";
 
 import IProjectsRepository from "../repositories/IProjectsRepository";
-import Project from "../models/Project";
 import ProjectStatus from "../enums/projectStatus";
+import  Projects  from "../models/Projects";
 
 interface IRequest {
   id: string;
@@ -16,14 +16,14 @@ export default class UpdateProjectStatusService {
   constructor(projectRepository: IProjectsRepository) {
     this.projectRepository = projectRepository;
   }
-  public async execute({ id, status }: IRequest): Promise<Project> {
+  public async execute({ id, status }: IRequest): Promise<Projects> {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {
       throw new AppError("Project not found!", 400);
     }
 
-    project.status = status;
+   // project.status = status;
     await this.projectRepository.save(project);
 
     return project;

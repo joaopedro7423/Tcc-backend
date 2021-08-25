@@ -1,7 +1,7 @@
 import AppError from '../errors/AppError';
+import  Proposals  from '../models/Proposals';
 
 import IProposalsRepository from '../repositories/IProposalsRepository';
-import Proposal from '../models/Proposals';
 import ProjectsRepository from '../repositories/ProjectsRepository';
 
 interface IRequest {
@@ -19,7 +19,7 @@ export default class UpdateProposalStatusService {
     this.proposalRepository = proposalRepository;
     this.projectRepository = projectRepository;
   }
-  public async execute({ id, user_accept_id }: IRequest): Promise<Proposal> {
+  public async execute({ id, user_accept_id }: IRequest): Promise<Proposals> {
     const proposal = await this.proposalRepository.findById(id);
 
   
@@ -42,7 +42,7 @@ export default class UpdateProposalStatusService {
 
     this.projectRepository.save(project)
 
-    proposal.project_id = project.id;
+   // proposal.project_id = project.id;
     await this.proposalRepository.save(proposal);
 
     return proposal;

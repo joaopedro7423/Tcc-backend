@@ -1,8 +1,8 @@
 import { hash } from 'bcrypt';
 import validator from 'validator';
 
-import User from '../models/Users';
 import AppError from '../errors/AppError';
+import Users  from '../models/Users';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import UsersRepository from '../repositories/UsersRepository';
@@ -30,7 +30,7 @@ export default class UpdateUsersService {
     password,
     role,
     course_id,
-  }: Request): Promise<User> {
+  }: Request): Promise<Users> {
     const user = await this.userRepository.findById(id);
 
     //se o cliente não existir retorna um error

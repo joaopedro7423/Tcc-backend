@@ -1,8 +1,8 @@
-import Campus from '../models/Campus';
 import AppError from '../errors/AppError';
 
 import ICampusRepository from '../repositories/ICampusRepository';
 import CampusRepository from '../repositories/CampusRepository';
+import Campus  from '../models/Campus';
 
 interface Request {
   name: string;

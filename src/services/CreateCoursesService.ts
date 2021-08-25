@@ -3,8 +3,8 @@ import validator from 'validator';
 import AppError from '../errors/AppError';
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
-import Course from '../models/Course';
 import CampusRepository from '../repositories/CampusRepository';
+import Courses from '../models/Courses';
 
 interface IRequest {
   name: string;
@@ -24,7 +24,7 @@ export default class CreateCoursesService {
     this.coursesRepository = coursesRepository;
     this.campusRepository = campusRepository;
   }
-  public async execute({ name, campus_id }: IRequest): Promise<Course> {
+  public async execute({ name, campus_id }: IRequest): Promise<Courses> {
     const nameUpper = name.toUpperCase().trim();
 
     if (!validator.isUUID(campus_id)) {
@@ -37,7 +37,10 @@ export default class CreateCoursesService {
       throw new AppError('Campus not found!', 400);
     }
 
-    const courseExist = await this.coursesRepository.findOneByName(nameUpper, campus_id);
+    const courseExist = await this.coursesRepository.findOneByName(
+      nameUpper,
+      campus_id,
+    );
 
     if (courseExist) {
       throw new AppError('Curso já cadastrado no campus!', 400);

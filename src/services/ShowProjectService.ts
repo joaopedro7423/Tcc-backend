@@ -1,7 +1,7 @@
 import AppError from "../errors/AppError";
+import  Projects  from "../models/Projects";
 
 import IProjectsRepository from "../repositories/IProjectsRepository";
-import Project from "../models/Project";
 import IUsersRepository from "../repositories/IUsersRepository";
 
 //essa parada (Service) aqui que se faz as regras de negócio
@@ -13,7 +13,7 @@ export default class ShowProjectService {
   constructor(projectRepository: IProjectsRepository) {
     this.projectRepository = projectRepository;
   }
-  public async execute(id: string): Promise<Project> {
+  public async execute(id: string): Promise<Projects> {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {

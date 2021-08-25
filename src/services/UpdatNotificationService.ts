@@ -1,6 +1,6 @@
 import { hash } from 'bcrypt';
-import Notification from '../models/Notifications';
 import AppError from '../errors/AppError';
+import  Notifications  from '../models/Notifications';
 
 import InotificationRepository from '../repositories/InotificationRepository';
 import notificationRepository from '../repositories/notificationRepository';
@@ -17,7 +17,7 @@ export default class UpdatNotificationService {
   constructor(notificationRepository: notificationRepository) {
     this.notificationRepository = notificationRepository;
   }
-  public async execute({ id, description }: Request): Promise<Notification> {
+  public async execute({ id, description }: Request): Promise<Notifications> {
     const notification = await this.notificationRepository.findById(id);
 
     //se o cliente não existir retorna um error

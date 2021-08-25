@@ -1,6 +1,6 @@
 import { getRepository, Repository } from 'typeorm';
 import ICreateProjectDTO from '../dtos/ICreateProjectDTO';
-import Project from '../models/Project';
+import Project from '../models/Projects';
 import IProjectsRepository from './IProjectsRepository';
 
 class ProjectsRepository implements IProjectsRepository {

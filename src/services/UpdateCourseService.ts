@@ -3,8 +3,8 @@ import validator from 'validator';
 import AppError from '../errors/AppError';
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
-import Course from '../models/Course';
 import CampusRepository from '../repositories/CampusRepository';
+import  Courses  from '../models/Courses';
 
 interface IRequest {
   id: string;
@@ -25,7 +25,7 @@ export default class UpdateCourseService {
     this.coursesRepository = coursesRepository;
     this.campusRepository = campusRepository;
   }
-  public async execute({ id, name, campus_id }: IRequest): Promise<Course> {
+  public async execute({ id, name, campus_id }: IRequest): Promise<Courses> {
 
  if (!validator.isUUID(id)) {
       throw new AppError('Codigo do curso invalido!', 400);
@@ -63,7 +63,7 @@ export default class UpdateCourseService {
     }
 
     course.name = nameUpper;
-    course.campus_id = campus_id;
+    course.campus.id = campus_id;
 
     await this.coursesRepository.save(course);
 

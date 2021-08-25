@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import AppError from '../errors/AppError';
-import User from '../models/Users';
+import  Users  from '../models/Users';
 import IUsersRepository from '../repositories/IUsersRepository';
 import UsersRepository from '../repositories/UsersRepository';
 
@@ -12,7 +12,7 @@ interface Request {
 
 interface Response {
   token: string;
-  user: User;
+  user: Users;
 }
 //SERVIÇO DE AUTENTICAÇÃO
 //essa parada (Service) aqui que se faz as regras de negócio

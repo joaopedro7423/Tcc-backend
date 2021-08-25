@@ -1,6 +1,6 @@
 import IProposalsRepository from '../repositories/IProposalsRepository';
-import Proposal from '../models/Proposals';
 import AppError from '../errors/AppError';
+import  Proposals  from '../models/Proposals';
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class ListAllProposalsService {
@@ -9,7 +9,7 @@ export default class ListAllProposalsService {
   constructor(proposalRepository: IProposalsRepository) {
     this.proposalRepository = proposalRepository;
   }
-  public async execute(role: string): Promise<Proposal[]> {
+  public async execute(role: string): Promise<Proposals[]> {
     // console.log(role);
 
     switch (role) {

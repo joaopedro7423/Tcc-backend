@@ -1,10 +1,10 @@
 import validator from 'validator';
 
 import AppError from '../errors/AppError';
-import Campus from '../models/Campus';
 
 import ICampusRepository from '../repositories/ICampusRepository';
 import CampusRepository from '../repositories/CampusRepository';
+import  Campus  from '../models/Campus';
 
 interface Request {
   id: string;

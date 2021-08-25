@@ -1,9 +1,9 @@
 import AppError from '../errors/AppError';
 
 import IProjectsRepository from '../repositories/IProjectsRepository';
-import Project from '../models/Project';
 import ProjectStatus from '../enums/projectStatus';
 import UsersRepository from '../repositories/UsersRepository';
+import Projects from '../models/Projects';
 
 interface IRequest {
   title: string;
@@ -20,7 +20,7 @@ export default class CreateProjectService {
   ) {
     this.projectRepository = projectRepository;
   }
-  public async execute({ title, description }: IRequest): Promise<Project> {
+  public async execute({ title, description }: IRequest): Promise<Projects> {
     const project = await this.projectRepository.create({
       title,
       description,

@@ -1,5 +1,5 @@
 import ICreateProjectDTO from "../dtos/ICreateProjectDTO";
-import Project from "../models/Project";
+import Project from "../models/Projects";
 
 export default interface IProjectsRepository {
   findAll(): Promise<Project[]>;

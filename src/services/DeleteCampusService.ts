@@ -23,7 +23,7 @@ export default class DeleteCampusService {
         const campusExist = await this.campusRepository.findById(id)
 
         if(!campusExist){
-            throw new AppError('Campus não existe', 401)
+            throw new AppError('Curso não existe', 401)
         }
         await this.campusRepository.delete(id)
     }

@@ -1,12 +1,15 @@
 import { getRepository, Like, Repository } from 'typeorm';
-import CreateCampusDTO from '../dtos/CreateCampusDTO';
-import Courses from '../models/Course';
+import CreateCourseDTO from '../dtos/ICreateCourseDTO';
+import Campus from '../models/Campus';
+import Courses from '../models/Courses';
 
 export default class CoursesRepository {
   private ormRepository: Repository<Courses>;
+  private ormCampusRepository: Repository<Campus>
 
   constructor() {
     this.ormRepository = getRepository(Courses);
+    this.ormCampusRepository = getRepository(Campus)
   }
 
   //implementações de métodos:
@@ -16,22 +19,26 @@ export default class CoursesRepository {
     });
   }
 
-  public async findAllByCampusId(campus_id: string): Promise<Courses[] | undefined> {
+  public async findAllByCampusId(
+    campus_id: string,
+  ): Promise<Courses[] | undefined> {
     return await this.ormRepository.find({
       where: { campus_id },
     });
   }
 
-  public async findOneByName(name: string, campus_id: string): Promise<Courses | undefined> {
+  public async findOneByName(
+    name: string,
+    campus_id: string,
+  ): Promise<Courses | undefined> {
     return this.ormRepository.findOne({
-      where: { name: Like(`${name}`) , campus_id: `${campus_id}`},
-      
+      where: { name: Like(`${name}`), campus: `${campus_id}` },
     });
   }
 
   public async findAll(): Promise<Courses[]> {
     return this.ormRepository.find({
-      relations: ["campus"]
+      relations: ['campus'],
     });
   }
 
@@ -42,14 +49,22 @@ export default class CoursesRepository {
     });
   }
 
-  public async create({ name, campus_id }: CreateCampusDTO): Promise<Courses> {
-    const campus = this.ormRepository.create({
-      name,
-      campus_id,
-    });
+  public async create({ name, campus_id }: CreateCourseDTO): Promise<Courses> {
+    //const campus = await this.ormCampusRepository.findOne({where: {id: campus_id}});
+/*
+    const campus = new Campus();
 
-    await this.ormRepository.save(campus);
-    return campus;
+    campus.id = campus_id;
+
+    const course = new Courses();
+
+      course.name = name
+      course.campus = campus
+*/
+   const course =  await this.ormRepository.create({name, campus:{id:campus_id}})
+
+    await this.ormRepository.save(course);
+    return course;
   }
 
   public async save(course: Courses): Promise<Courses> {

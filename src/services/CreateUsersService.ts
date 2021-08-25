@@ -1,13 +1,13 @@
 import { hash } from 'bcrypt';
 import validator from 'validator';
 
-import User from '../models/Users';
 import AppError from '../errors/AppError';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import UsersRepository from '../repositories/UsersRepository';
 
 import CoursesRepository from '../repositories/CoursesRepository';
+import  Users  from '../models/Users';
 
 interface Request {
   name: string;
@@ -37,7 +37,7 @@ export default class CreateUsersService {
     password,
     role,
     course_id,
-  }: Request): Promise<Omit<User, 'password'>> {
+  }: Request): Promise<Omit<Users, 'password'>> {
     const userExist = await this.userRepository.findByEmail(email);
 
     if (userExist) {
@@ -50,9 +50,9 @@ export default class CreateUsersService {
       throw new AppError('Codigo do curso invalido!', 400);
     }
 
-    const courseExist = await this.courseRepository.findById(course_id)
+    const courseExist = await this.courseRepository.findById(course_id);
 
-    if(!courseExist || undefined){
+    if (!courseExist || undefined) {
       throw new AppError('Curso não encontrado', 401);
     }
 

@@ -1,8 +1,8 @@
 import AppError from '../errors/AppError';
+import  Projects  from '../models/Projects';
 
 import IProjectsRepository from '../repositories/IProjectsRepository';
-import Project from '../models/Project';
-import ProjectStatus from '../enums/projectStatus';
+
 
 interface IRequest {
   id: string;
@@ -22,7 +22,7 @@ export default class UpdateProjectService {
     title,
 
     description,
-  }: IRequest): Promise<Project> {
+  }: IRequest): Promise<Projects> {
     const project = await this.projectRepository.findById(id);
 
     if (!project) {

@@ -1,6 +1,6 @@
 import AppError from '../errors/AppError';
+import  Notifications  from '../models/Notifications';
 
-import Notification from '../models/Notifications';
 
 import InotificationRepository from '../repositories/InotificationRepository';
 import notificationRepository from '../repositories/notificationRepository';
@@ -20,7 +20,7 @@ export default class CreateNotificationService {
   public async execute({
     description,
     user_id,
-  }: Request): Promise<Notification> {
+  }: Request): Promise<Notifications> {
     const Notification = await this.notificationRepository.create({
       description,
       user_id,

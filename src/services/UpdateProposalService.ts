@@ -1,7 +1,7 @@
 import AppError from '../errors/AppError';
+import Proposals  from '../models/Proposals';
 
 import IProposalsRepository from '../repositories/IProposalsRepository';
-import Proposal from '../models/Proposals';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
@@ -29,7 +29,7 @@ export default class UpdateProposalService {
     title,
     user_create_id,
     description,
-  }: IRequest): Promise<Proposal> {
+  }: IRequest): Promise<Proposals> {
     const proposal = await this.projectRepository.findById(id);
 
     if (!proposal) {

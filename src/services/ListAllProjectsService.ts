@@ -1,5 +1,5 @@
+import  Projects  from "../models/Projects";
 import IProjectsRepository from "../repositories/IProjectsRepository";
-import Project from "../models/Project";
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class ListAllProjectsService {
@@ -8,7 +8,7 @@ export default class ListAllProjectsService {
   constructor(projectRepository: IProjectsRepository) {
     this.projectRepository = projectRepository;
   }
-  public async execute(): Promise<Project[]> {
+  public async execute(): Promise<Projects[]> {
     const projects = await this.projectRepository.findAll();
 
     return projects;

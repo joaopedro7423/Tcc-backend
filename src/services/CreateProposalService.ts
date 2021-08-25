@@ -1,7 +1,7 @@
 import AppError from '../errors/AppError';
+import  Proposals  from '../models/Proposals';
 
 import IProposalsRepository from '../repositories/IProposalsRepository';
-import Proposal from '../models/Proposals';
 import UsersRepository from '../repositories/UsersRepository';
 
 interface IRequest {
@@ -27,7 +27,7 @@ export default class CreateProposalService {
     title,
     user_create_id,
     description,
-  }: IRequest): Promise<Proposal> {
+  }: IRequest): Promise<Proposals> {
 
     
     const userExist = await this.userRepository.findById(user_create_id);
