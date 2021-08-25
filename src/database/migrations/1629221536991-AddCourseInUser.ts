@@ -17,7 +17,7 @@ export class AddCourseInUser1629221536991 implements MigrationInterface {
             name: 'UserCourseFk',
             columnNames: ['course_id'],
             referencedColumnNames:['id'],
-            referencedTableName:'course',
+            referencedTableName:'courses',
             onDelete:'CASCADE',
             onUpdate: 'CASCADE'
           }))
