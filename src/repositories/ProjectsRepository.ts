@@ -11,14 +11,10 @@ class ProjectsRepository implements IProjectsRepository {
   }
 
   public async findAll(): Promise<Project[]> {
-    return this.ormRepository.find({
-      relations: ['user'],
-    });
+    return this.ormRepository.find({relations:["proposals"]});
   }
   public async findById(id: string): Promise<Project | undefined> {
-    return this.ormRepository.findOne(id, {
-      relations: ['user'],
-    });
+    return this.ormRepository.findOne(id);
   }
   public async create({
     title,
