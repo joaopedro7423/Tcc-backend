@@ -2,7 +2,8 @@ import { hash } from 'bcrypt';
 import validator from 'validator';
 
 import AppError from '../errors/AppError';
-import Users  from '../models/Users';
+import Users from '../models/Users';
+import CoursesRepository from '../repositories/CoursesRepository';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 import UsersRepository from '../repositories/UsersRepository';
@@ -20,8 +21,14 @@ interface Request {
 export default class UpdateUsersService {
   private userRepository: IUsersRepository;
 
-  constructor(userRepository: UsersRepository) {
+  private coursersRepository: CoursesRepository;
+
+  constructor(
+    userRepository: UsersRepository,
+    coursersRepository: CoursesRepository,
+  ) {
     this.userRepository = userRepository;
+    this.coursersRepository = coursersRepository;
   }
   public async execute({
     id,
@@ -59,13 +66,20 @@ export default class UpdateUsersService {
       throw new AppError('Codigo do curso invalido!', 400);
     }
 
+    const curso = await this.coursersRepository.findById(course_id);
+
+    if (!curso) {
+      throw new AppError('Curso não existe!', 400);
+    }
+
+    curso.id = course_id;
+
     //caso se passe dessas 2 condições
     //atualizase os dados do objeto
     user.name = name;
     user.email = email;
     user.role = role;
-    user.course_id = course_id;
-
+    user.course = curso;
     //salva
     await this.userRepository.save(user);
 

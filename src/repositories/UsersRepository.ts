@@ -56,7 +56,7 @@ export default class UsersRepository implements IUsersRepository {
       email,
       password,
       role,
-      course_id
+      course:{id: course_id}
     });
     await this.ormRepository.save(user);
     return user;

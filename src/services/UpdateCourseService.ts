@@ -61,6 +61,7 @@ export default class UpdateCourseService {
     if (!campusExist) {
       throw new AppError('Campus not found!', 400);
     }
+    
     campusExist.id = campus_id
 
     course.name = nameUpper;

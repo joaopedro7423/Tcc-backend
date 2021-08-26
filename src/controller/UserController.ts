@@ -70,7 +70,11 @@ export default class UserController {
     const { name, email, password, role, course_id } = req.body;
 
     const userRepository = new UsersRepository();
-    const updateUsers = new UpdateUsersService(userRepository);
+    const coursersRepository = new CoursesRepository();
+    const updateUsers = new UpdateUsersService(
+      userRepository,
+      coursersRepository,
+    );
 
     const user = await updateUsers.execute({
       id,
