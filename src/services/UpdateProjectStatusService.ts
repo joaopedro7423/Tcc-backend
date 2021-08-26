@@ -1,7 +1,7 @@
 import AppError from "../errors/AppError";
 
 import IProjectsRepository from "../repositories/IProjectsRepository";
-import ProjectStatus from "../enums/projectStatus";
+import ProjectStatus from "../enums/ActivitiesStatus";
 import  Projects  from "../models/Projects";
 
 interface IRequest {
