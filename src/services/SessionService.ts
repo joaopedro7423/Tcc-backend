@@ -1,7 +1,7 @@
 import { compare, hash } from 'bcrypt';
 import { sign } from 'jsonwebtoken';
 import AppError from '../errors/AppError';
-import  Users  from '../models/Users';
+import Users from '../models/Users';
 import IUsersRepository from '../repositories/IUsersRepository';
 import UsersRepository from '../repositories/UsersRepository';
 
@@ -39,7 +39,7 @@ export default class SessionUsersService {
 
     //Conferiu se esta com email e senha certos, agora se cria um token
     const token = sign(
-      { id: user.id, role: user.role, course_id: user.course_id },
+      { id: user.id, role: user.role, course_id: user.course.id},
       process.env.APP_SECRET,
       {
         expiresIn: '1d',
