@@ -36,8 +36,9 @@ export default class NotificationRepository implements INotificationRepository {
   }: ICreateNotificationDTO): Promise<Notification> {
     const notification = this.ormRepository.create({
       description,
-      user_id,
+      user: { id: user_id },
     });
+
     await this.ormRepository.save(notification);
     return notification;
   }
