@@ -22,6 +22,8 @@ projectRoutes.put('/:id', projectController.update);
 
 projectRoutes.get('/:id', projectController.show);
 
+projectRoutes.delete('/:id', projectController.destroy);
+
 //projectRoutes.patch("/:id", projectController.chengeStatus); //patch é recomendado para alterar apenas 1 campo como nesse caso
 
 export default projectRoutes;

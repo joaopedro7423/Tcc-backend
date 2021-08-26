@@ -6,4 +6,5 @@ export default interface IProjectsRepository {
   findById(id: string): Promise<Project | undefined>;
   create(createProject: ICreateProjectDTO): Promise<Project>;
   save(project: Project): Promise<Project>;
+  delete(id: string): Promise<void>;
 }

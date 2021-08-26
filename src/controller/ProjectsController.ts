@@ -6,6 +6,7 @@ import CreateProjectService from '../services/CreateProjectService';
 import ShowProjectService from '../services/ShowProjectService';
 import ListAllProjectsService from '../services/ListAllProjectsService';
 import UpdateProjectService from '../services/UpdateProjectService';
+import DeleteProjectService from '../services/DeleteProjectService';
 
 export default class ProjectsController {
   //para achar todos os users listar claro
@@ -74,6 +75,16 @@ export default class ProjectsController {
     });
 
     return response.json(project);
+  }
+
+  public async destroy(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+   const projectsRepository = new ProjectsRepository();
+    const destroyProposal = new DeleteProjectService(projectsRepository);
+    await destroyProposal.execute(id);
+
+    return res.status(204).send();
   }
   /*
   public async chengeStatus(
