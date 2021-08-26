@@ -11,7 +11,7 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findAll(): Promise<Proposal[]> {
-    return await this.ormRepository.find();
+    return await this.ormRepository.find({relations:["userCreate","userAccept"]});
   }
 
   public async findAllNullByRole(
@@ -37,7 +37,7 @@ class ProposalsRepository implements IProposalsRepository {
     const proposal = this.ormRepository.create({
       title,
       description,
-      user_create_id,
+      userCreate: { id: user_create_id },
     });
 
     await this.ormRepository.save(proposal);

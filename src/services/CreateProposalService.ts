@@ -30,12 +30,12 @@ export default class CreateProposalService {
   }: IRequest): Promise<Proposals> {
 
     
-    const userExist = await this.userRepository.findById(user_create_id);
+    const user = await this.userRepository.findById(user_create_id);
 
-    if (!userExist) {
+    if (!user) {
       throw new AppError('User not found!', 400);
     }
-
+    
     const project = await this.ProposalRepository.create({
       title,
       user_create_id,

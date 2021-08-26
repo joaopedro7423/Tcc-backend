@@ -42,7 +42,8 @@ export default class ProposalsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { title, user_create_id, description } = request.body;
+    const { title,  description } = request.body;
+    const  user_create_id = request.user.id;
     const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProposalService(
@@ -61,7 +62,8 @@ export default class ProposalsController {
 
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
-    const { title, description, user_create_id } = request.body;
+    const { title, description } = request.body;
+    const  user_create_id = request.user.id;
     const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
     const updateProject = new UpdateProposalService(
@@ -84,13 +86,16 @@ export default class ProposalsController {
     response: Response,
   ): Promise<Response> {
     const { id } = request.params;
-    const { user_accept_id } = request.body;
+    const user_accept_id = request.user.id
+
     const proposalsRepository = new ProposalsRepository();
     const projectRepository = new ProjectsRepository();
+    const userRepository = new UsersRepository();
 
     const updateProject = new UpdateProposalStatusService(
       proposalsRepository,
       projectRepository,
+      userRepository
     );
 
     const project = await updateProject.execute({
