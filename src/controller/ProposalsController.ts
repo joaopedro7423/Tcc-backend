@@ -10,7 +10,6 @@ import UpdateProposalService from '../services/UpdateProposalService';
 import UpdateProposalStatusService from '../services/UpdateProposalStatusService';
 import DeleteProposalService from '../services/DeleteProposalService';
 
-import AppError from '../errors/AppError';
 import ProjectsRepository from '../repositories/ProjectsRepository';
 
 /*

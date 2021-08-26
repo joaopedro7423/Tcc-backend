@@ -52,6 +52,4 @@ export default class Proposals {
   @JoinColumn([{ name: 'user_create_id', referencedColumnName: 'id' }])
   userCreate: Users;
 
-  user_accept_id: string;
-  user_create_id: string;
 }

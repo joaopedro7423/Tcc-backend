@@ -26,7 +26,7 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findById(id: string): Promise<Proposal | undefined> {
-    return this.ormRepository.findOne(id);
+    return this.ormRepository.findOne(id, {relations:["project"]});
   }
 
   public async create({
