@@ -11,10 +11,14 @@ class ProjectsRepository implements IProjectsRepository {
   }
 
   public async findAll(): Promise<Project[]> {
-    return this.ormRepository.find({relations:["proposals"]});
+    return this.ormRepository.find({
+      relations: ['proposals', 'proposals.userAccept', 'proposals.userCreate'],
+    });
   }
   public async findById(id: string): Promise<Project | undefined> {
-    return this.ormRepository.findOne(id);
+    return this.ormRepository.findOne(id, {
+      relations: ['proposals', 'proposals.userAccept', 'proposals.userCreate'],
+    });
   }
   public async create({
     title,
@@ -30,6 +34,10 @@ class ProjectsRepository implements IProjectsRepository {
 
   public async save(project: Project): Promise<Project> {
     return this.ormRepository.save(project);
+  }
+
+  public async delete(id: string): Promise<void> {
+    this.ormRepository.delete(id);
   }
 }
 
