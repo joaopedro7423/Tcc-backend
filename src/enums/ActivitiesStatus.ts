@@ -1,4 +1,4 @@
-enum ProjectStatus{
+enum ActivitiesStatus{
   NEW = 'NEW',
   IN_PROGRESS = 'IN_PROGRESS',
   PAUSE = 'PAUSE',
@@ -6,4 +6,4 @@ enum ProjectStatus{
   CANCELED = 'CANCELED' 
 }
 
-export default ProjectStatus
+export default ActivitiesStatus
