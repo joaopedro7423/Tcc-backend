@@ -23,7 +23,7 @@ export default class CoursesRepository {
     campus_id: string,
   ): Promise<Courses[] | undefined> {
     return await this.ormRepository.find({
-      where: { campus_id },
+      where: { campus: `${campus_id}` },
     });
   }
 

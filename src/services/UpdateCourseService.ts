@@ -4,7 +4,7 @@ import AppError from '../errors/AppError';
 
 import ICoursesRepository from '../repositories/ICoursesRepository';
 import CampusRepository from '../repositories/CampusRepository';
-import  Courses  from '../models/Courses';
+import Courses from '../models/Courses';
 
 interface IRequest {
   id: string;
@@ -26,10 +26,10 @@ export default class UpdateCourseService {
     this.campusRepository = campusRepository;
   }
   public async execute({ id, name, campus_id }: IRequest): Promise<Courses> {
-
- if (!validator.isUUID(id)) {
+    if (!validator.isUUID(id)) {
       throw new AppError('Codigo do curso invalido!', 400);
     }
+
     const course = await this.coursesRepository.findById(id);
 
     if (!course) {
@@ -47,7 +47,7 @@ export default class UpdateCourseService {
     if (nameUpper !== course.name) {
       const campusExist = await this.coursesRepository.findOneByName(
         nameUpper,
-        campus_id
+        campus_id,
       );
       if (campusExist) {
         throw new AppError('Esse campus já é cadastrado!', 401);
@@ -61,9 +61,11 @@ export default class UpdateCourseService {
     if (!campusExist) {
       throw new AppError('Campus not found!', 400);
     }
+    campusExist.id = campus_id
 
     course.name = nameUpper;
-    course.campus.id = campus_id;
+    
+    course.campus = campusExist;
 
     await this.coursesRepository.save(course);
 
