@@ -23,7 +23,7 @@ export default class UpdateActivitiesService {
     const activitie = await this.activitieRepository.findById(id);
 
     if (!activitie) {
-      throw new AppError('Proposal not found!', 400);
+      throw new AppError('Atividade não encontrada!', 400);
     }
 
     activitie.title = title;
