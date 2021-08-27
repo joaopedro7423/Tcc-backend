@@ -3,10 +3,11 @@
     "version": "0.0.1",
     "description": "Awesome project developed with TypeORM.",
     "scripts": {
-        "start": "ts-node src/index.ts",
+        "start": "node build/src/index.js",
         "dev": "nodemon src/index.ts",
         "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
-        "dev2": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts"
+        "dev2": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts",
+        "build": "rm -rf ./build && tsc"
     },
     "eslint.validate": [
         "javascript",
