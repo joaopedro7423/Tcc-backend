@@ -3,7 +3,7 @@ import ActivitiesRepository from '../repositories/ActivitiesRepository';
 import CreateActivitiesService from '../services/CreateActivitiesService';
 import DeleteActivitiesService from '../services/DeleteActivitiesService';
 import ListAllActivitiesService from '../services/ListAllActivitiesService';
-import UpdadteActivitiesService from '../services/UpdadteActivitiesService';
+import UpdateActivitiesService from '../services/UpdateActivitiesService';
 
 export default class ActivitiesController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -37,7 +37,7 @@ export default class ActivitiesController {
 
     const activitiesRepository = new ActivitiesRepository();
 
-    const updateActivities = new UpdadteActivitiesService(activitiesRepository);
+    const updateActivities = new UpdateActivitiesService(activitiesRepository);
 
     const activities = await updateActivities.execute({
       id,
