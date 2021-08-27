@@ -33,13 +33,13 @@ export default class UpdateProposalService {
     const proposal = await this.projectRepository.findById(id);
 
     if (!proposal) {
-      throw new AppError('Proposal not found!', 400);
+      throw new AppError('Proposta não encontrado!', 400);
     }
 
     const userExist = await this.userRepository.findById(user_create_id);
 
     if (!userExist) {
-      throw new AppError('User not found!', 400);
+      throw new AppError('Usuário não encontrado!', 400);
     }
 
     proposal.title = title;
