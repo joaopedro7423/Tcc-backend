@@ -57,7 +57,7 @@ export default class ActivitiesController {
 
     await destoryActivities.execute(id)
 
-    return res.status(204).send("Atividade deletado com sucesso")
+    return res.status(204).send()
 
 
   }
