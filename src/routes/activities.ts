@@ -24,6 +24,8 @@ activitiesRoutes.post('/', activitiesController.create);
 
 activitiesRoutes.put('/:id', activitiesController.update);
 
+activitiesRoutes.patch('/:id', activitiesController.chengeStatus);
+
 activitiesRoutes.delete('/:id', activitiesController.destroy);
 
 export default activitiesRoutes;

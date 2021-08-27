@@ -4,6 +4,7 @@ import CreateActivitiesService from '../services/CreateActivitiesService';
 import DeleteActivitiesService from '../services/DeleteActivitiesService';
 import ListAllActivitiesService from '../services/ListAllActivitiesService';
 import UpdateActivitiesService from '../services/UpdateActivitiesService';
+import UpdateActivitiesStatusService from '../services/UpdateActivitiesStatusService';
 
 export default class ActivitiesController {
   public async index(req: Request, res: Response): Promise<Response> {
@@ -48,20 +49,33 @@ export default class ActivitiesController {
     return res.status(201).json(activities);
   }
 
-  public async destroy(req: Request, res: Response):Promise<Response>{
+  public async chengeStatus(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-  
+    const { status } = req.body;
+
+    const activitiesRepository = new ActivitiesRepository();
+
+    const updateActivities = new UpdateActivitiesStatusService(
+      activitiesRepository,
+    );
+
+    const activitie = await updateActivities.execute({
+      id,
+      status,
+    });
+
+    return res.status(201).json(activitie);
+  }
+
+  public async destroy(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
     const activitiesRepository = new ActivitiesRepository();
 
     const destoryActivities = new DeleteActivitiesService(activitiesRepository);
 
-    await destoryActivities.execute(id)
+    await destoryActivities.execute(id);
 
-    return res.status(204).send()
-
-
+    return res.status(204).send();
   }
-
-
-
 }
