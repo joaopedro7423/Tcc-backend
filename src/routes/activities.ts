@@ -16,14 +16,14 @@ activitiesRoutes.get('/', activitiesController.index); // listar todos os usuari
 
 //activitiesRoutes.use(authRole(['professor', 'adm']));
 
-//activitiesRoutes.post('/', activitiesController.create);
+activitiesRoutes.post('/', activitiesController.create);
 
 //activitiesRoutes.get("/pagineted", ActivitiesController.paginated); //listar os usuários por 10 em 10
 
 //activitiesRoutes.get("/search", ActivitiesController.search);
 
-//activitiesRoutes.put('/:id', activitiesController.update);
+activitiesRoutes.put('/:id', activitiesController.update);
 
-//activitiesRoutes.delete('/:id', activitiesController.destroy);
+activitiesRoutes.delete('/:id', activitiesController.destroy);
 
 export default activitiesRoutes;
