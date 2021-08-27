@@ -1,6 +1,6 @@
 import ActivitiesStatus from "../enums/ActivitiesStatus";
 
-export default interface ICreateActivitiesDTO {
+export default interface CreateActivitiesDTO {
  title: string
  description: string
  status: ActivitiesStatus
