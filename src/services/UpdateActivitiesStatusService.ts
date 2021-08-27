@@ -19,11 +19,15 @@ export default class UpdateActivitiesStatusService {
   public async execute({ id, status }: IRequest): Promise<Activities> {
     const activitie = await this.activitieRepository.findById(id);
 
+
     if (!activitie) {
-      throw new AppError('Proposal not found!', 400);
+      throw new AppError('Atividade não encontrada!', 400);
     }
+    
 
-
+    if(!Object.values(ActivitiesStatus).includes(status.toUpperCase().trim() as ActivitiesStatus)){
+        throw new AppError('Status invalido!', 400);
+    }
 
     activitie.status = status;
 
