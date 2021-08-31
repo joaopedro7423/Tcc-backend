@@ -10,9 +10,10 @@ import DeleteCourseService from '../services/DeleteCourseService';
 export default class CoursesController {
   //para achar todos os users listar claro
   public async index(req: Request, res: Response): Promise<Response> {
+    const {id} = req.params
     const coursesRepository = new CoursesRepository();
 
-    const courses = await coursesRepository.findAll();
+    const courses = await coursesRepository.findAllByCampusId(id);
 
     return res.json(courses);
   }
