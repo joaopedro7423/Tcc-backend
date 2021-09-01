@@ -13,7 +13,7 @@ export default class CoursesController {
     const {id} = req.params
     const coursesRepository = new CoursesRepository();
 
-    const courses = await coursesRepository.findAllByCampusId(id);
+    const courses = await coursesRepository.findAll();
 
     return res.json(courses);
   }

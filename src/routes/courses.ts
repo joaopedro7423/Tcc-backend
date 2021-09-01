@@ -18,7 +18,9 @@ coursesRoutes.post('/',campusController.create);
 
 //coursesRoutes.get("/", authenticate, campusController.index); // assim se autentica individualmente
 
-coursesRoutes.get('/:id', campusController.index);
+coursesRoutes.get('/', campusController.index);
+
+coursesRoutes.get('/:id', campusController.show);
  // listar todos os cursos
 
  //listar todos os cursos dependentes do campo id
