@@ -30,6 +30,17 @@ export default class NotificationRepository implements INotificationRepository {
       .getMany();
   }
 
+  public async findAllByIdProfessor(user_id: string): Promise<Notification[]> {
+    return this.ormRepository.find({
+      where: {
+        user: {
+          id: user_id,
+        },
+      },
+      relations: ['user'],
+    });
+  }
+
   public async create({
     description,
     user_id,

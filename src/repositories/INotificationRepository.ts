@@ -6,6 +6,7 @@ export default interface INotificationRepository {
   findById(id: string): Promise<Notifications | undefined>;
   findAll(): Promise<Notifications[]>;
   findByCourse(course: string): Promise<Notifications[]>;
+  findAllByIdProfessor(user_id: string): Promise<Notifications[] | undefined>;
   // findAllByName(name: string): Promise<Notifications[]>;
   //findAllPaginated(page: number): Promise<[Notifications[], number]>; //esse number é para retornar a quantidade total de user no banco de dados
   create(createNotificationDTO: ICreateNotificationDTO): Promise<Notifications>;
