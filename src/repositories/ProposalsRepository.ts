@@ -11,7 +11,9 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findAll(): Promise<Proposal[]> {
-    return await this.ormRepository.find({relations:["userCreate","userAccept"]});
+    return await this.ormRepository.find({
+      relations: ['userCreate', 'userAccept'],
+    });
   }
 
   public async findAllNullByRole(
@@ -26,7 +28,16 @@ class ProposalsRepository implements IProposalsRepository {
   }
 
   public async findById(id: string): Promise<Proposal | undefined> {
-    return this.ormRepository.findOne(id, {relations:["project"]});
+    return this.ormRepository.findOne(id, { relations: ['project'] });
+  }
+  public async findAllNullById(id: string): Promise<Proposal[] | undefined> {
+    return this.ormRepository.find({
+      where: {
+        userCreate: { id: id },
+        userAccept: null,
+      },
+      relations: ['userCreate', 'userAccept'],
+    });
   }
 
   public async create({
