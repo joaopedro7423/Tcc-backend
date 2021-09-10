@@ -24,7 +24,10 @@ export default class ProposalsController {
 
     const proposalService = new ListAllProposalsService(proposalsRepository);
 
-    const projects = await proposalService.execute(req.user.role);
+    const projects = await proposalService.execute({
+      id: req.user.id,
+      role: req.user.role
+    });
 
     return res.json(projects);
   }
@@ -41,8 +44,8 @@ export default class ProposalsController {
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
-    const { title,  description } = request.body;
-    const  user_create_id = request.user.id;
+    const { title, description } = request.body;
+    const user_create_id = request.user.id;
     const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
     const createProject = new CreateProposalService(
@@ -62,7 +65,7 @@ export default class ProposalsController {
   public async update(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { title, description } = request.body;
-    const  user_create_id = request.user.id;
+    const user_create_id = request.user.id;
     const proposalsRepository = new ProposalsRepository();
     const userRepository = new UsersRepository();
     const updateProject = new UpdateProposalService(
@@ -85,7 +88,7 @@ export default class ProposalsController {
     response: Response,
   ): Promise<Response> {
     const { id } = request.params;
-    const user_accept_id = request.user.id
+    const user_accept_id = request.user.id;
 
     const proposalsRepository = new ProposalsRepository();
     const projectRepository = new ProjectsRepository();
@@ -94,7 +97,7 @@ export default class ProposalsController {
     const updateProject = new UpdateProposalStatusService(
       proposalsRepository,
       projectRepository,
-      userRepository
+      userRepository,
     );
 
     const project = await updateProject.execute({
