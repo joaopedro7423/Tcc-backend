@@ -1,10 +1,10 @@
 import IProposalsRepository from '../repositories/IProposalsRepository';
 import AppError from '../errors/AppError';
-import  Proposals  from '../models/Proposals';
+import Proposals from '../models/Proposals';
 
-interface Irequest{
-  id: string,
-  role: string
+interface Irequest {
+  id: string;
+  role: string;
 }
 
 //essa parada (Service) aqui que se faz as regras de negócio
@@ -14,14 +14,14 @@ export default class ListAllProposalsService {
   constructor(proposalRepository: IProposalsRepository) {
     this.proposalRepository = proposalRepository;
   }
-  public async execute({id,role}:Irequest): Promise<Proposals[]> {
+  public async execute({ id, role }: Irequest): Promise<Proposals[]> {
     // console.log(role);
 
     switch (role) {
       case 'adm':
         return await this.proposalRepository.findAll();
       case 'student':
-        return await this.proposalRepository.findAllNullByRole('professor');
+        return await this.proposalRepository.findAllNullById(id);
       case 'professor':
         return await this.proposalRepository.findAllNullById(id);
 
