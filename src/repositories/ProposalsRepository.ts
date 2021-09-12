@@ -1,4 +1,5 @@
 import { getRepository, IsNull, Like, Repository } from 'typeorm';
+import { isDataView } from 'util/types';
 import ICreateProposalsDTO from '../dtos/ICreateProposalsDTO';
 import Proposal from '../models/Proposals';
 import IProposalsRepository from './IProposalsRepository';
@@ -30,6 +31,7 @@ class ProposalsRepository implements IProposalsRepository {
   public async findById(id: string): Promise<Proposal | undefined> {
     return this.ormRepository.findOne(id, { relations: ['project'] });
   }
+
   public async findAllNullById(id: string): Promise<Proposal[] | undefined> {
     return this.ormRepository.find({
       where: {
@@ -38,6 +40,35 @@ class ProposalsRepository implements IProposalsRepository {
       },
       relations: ['userCreate', 'userAccept'],
     });
+  }
+
+  public async findAllNullByRoleAndCourse(
+    id: string,
+    role: string,
+    course: string,
+  ): Promise<Proposal[] | undefined> {
+    //console.log(course);
+    return await this.ormRepository
+      .createQueryBuilder('pro')
+      .innerJoinAndSelect('pro.userCreate', 'userCreate')
+      .where('userCreate.role = :role_id', { role_id: role })
+      .andWhere('userCreate.course = :course_id', { course_id: course })
+      .andWhere('pro.user_accept_id is null')
+      .getMany();
+    /*
+    return this.ormRepository.find({
+      relations: ['userCreate', 'userAccept'],
+      where: {
+        userCreate: { role: role, course: { id: course } },
+
+        userAccept: null,
+      },
+
+      order: {
+        createAt: 'ASC',
+      },
+    });
+    */
   }
 
   public async create({
