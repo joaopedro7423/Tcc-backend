@@ -9,7 +9,12 @@ const proposalController = new ProposalsController();
 
 proposalRoutes.use(authenticate);
 
-proposalRoutes.get('/',proposalController.index);
+proposalRoutes.get('/', proposalController.index);
+
+proposalRoutes.get(
+  '/listByRoleAndCourse',
+  proposalController.listProposalByRoleAndCourse,
+);
 
 //proposalRoutes.get("/", authenticate, proposalController.index); // assim se autentica individualmente
 
