@@ -4,6 +4,7 @@ import ProposalsRepository from '../repositories/ProposalsRepository';
 import UsersRepository from '../repositories/UsersRepository';
 
 import ListAllProposalsService from '../services/ListProposalsServiceByRole';
+import ListProposalsByCourseRoleService from '../services/ListProposalsByCourseRoleService';
 import ShowProposalService from '../services/ShowProposalService';
 import CreateProposalService from '../services/CreateProposalService';
 import UpdateProposalService from '../services/UpdateProposalService';
@@ -26,7 +27,28 @@ export default class ProposalsController {
 
     const projects = await proposalService.execute({
       id: req.user.id,
-      role: req.user.role
+      role: req.user.role,
+    });
+
+    return res.json(projects);
+  }
+
+  public async listProposalByRoleAndCourse(
+    req: Request,
+    res: Response,
+  ): Promise<Response> {
+    //console.log(req.user);
+
+    const proposalsRepository = new ProposalsRepository();
+
+    const proposalService = new ListProposalsByCourseRoleService(
+      proposalsRepository,
+    );
+
+    const projects = await proposalService.execute({
+      id: req.user.id,
+      role: req.user.role,
+      course: req.user.course_id,
     });
 
     return res.json(projects);
