@@ -110,7 +110,6 @@ export default class ProposalsController {
     response: Response,
   ): Promise<Response> {
     const { id } = request.params;
-    const user_accept_id = request.user.id;
 
     const proposalsRepository = new ProposalsRepository();
     const projectRepository = new ProjectsRepository();
@@ -124,7 +123,7 @@ export default class ProposalsController {
 
     const project = await updateProject.execute({
       id,
-      user_accept_id,
+      user_accept_id: request.user.id,
     });
 
     return response.json(project);
