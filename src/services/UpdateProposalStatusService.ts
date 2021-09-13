@@ -28,20 +28,25 @@ export default class UpdateProposalStatusService {
     this.userRepository = userRepository;
   }
   public async execute({ id, user_accept_id }: IRequest): Promise<Proposals> {
+    // console.log(user_accept_id);
+    //console.log(id);
     const proposal = await this.proposalRepository.findById(id);
 
-    const id_proposal_project = proposal.project.id;
+    //console.log(id_project);
 
     if (!proposal) {
       throw new AppError('Proposta não encontrado!', 400);
     }
 
+    // console.log(proposal.project);
 
-    console.log(id_proposal_project);
-    const projectExist = await this.projectRepository.findById(
-      id_proposal_project,
-    );
+    const projectExist = proposal.project;
+    //console.log(id_project);
 
+    /*
+    const projectExist = await this.projectRepository.findById(id_project);
+
+    */
     if (projectExist) {
       throw new AppError('O projeto já existe!', 400);
     }
