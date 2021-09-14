@@ -10,7 +10,9 @@ const activitiesController = new ActivitiesController();
 
 activitiesRoutes.use(authenticate); // assim se aplica para quem está abaixo a autentiticação
 
-activitiesRoutes.get('/', activitiesController.index); // listar todos os usuarios
+activitiesRoutes.get('/', activitiesController.index); // listar todas as atividades
+
+activitiesRoutes.get('/listbyproject/:id_project', activitiesController.listByProjectId); // listar todas as atividades do projeto determinado
 
 //activitiesRoutes.get("/", authenticate, ActivitiesController.index); // assim se autentica individualmente
 
