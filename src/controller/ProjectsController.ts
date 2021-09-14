@@ -12,10 +12,11 @@ export default class ProjectsController {
   //para achar todos os users listar claro
   public async index(req: Request, res: Response): Promise<Response> {
     const projectsRepository = new ProjectsRepository();
-
+    const { id, role } = req.user;
+    // console.log(user_id)
     const projectsService = new ListAllProjectsService(projectsRepository);
 
-    const projects = await projectsService.execute();
+    const projects = await projectsService.execute({ user_id: id, role });
 
     return res.json(projects);
   }
@@ -80,7 +81,7 @@ export default class ProjectsController {
   public async destroy(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-   const projectsRepository = new ProjectsRepository();
+    const projectsRepository = new ProjectsRepository();
     const destroyProposal = new DeleteProjectService(projectsRepository);
     await destroyProposal.execute(id);
 
