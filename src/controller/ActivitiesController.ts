@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import ActivitiesRepository from '../repositories/ActivitiesRepository';
 import CreateActivitiesService from '../services/CreateActivitiesService';
 import DeleteActivitiesService from '../services/DeleteActivitiesService';
+import ListAllActivitiesByProjectIdService from '../services/ListAllActivitiesByProjectIdService';
 import ListAllActivitiesService from '../services/ListAllActivitiesService';
 import UpdateActivitiesService from '../services/UpdateActivitiesService';
 import UpdateActivitiesStatusService from '../services/UpdateActivitiesStatusService';
@@ -16,6 +17,21 @@ export default class ActivitiesController {
 
     return res.json(activities);
   }
+
+  public async listByProjectId(req: Request, res: Response): Promise<Response> {
+    const { id_project } = req.params;
+      console.log(id_project)
+    const activitiesRepository = new ActivitiesRepository();
+
+    const projectsService = new ListAllActivitiesByProjectIdService(activitiesRepository);
+
+    const activities = await projectsService.execute({
+      id_project
+    });
+
+    return res.json(activities);
+  }
+
 
   public async create(request: Request, response: Response): Promise<Response> {
     const { title, description, project_id } = request.body;
