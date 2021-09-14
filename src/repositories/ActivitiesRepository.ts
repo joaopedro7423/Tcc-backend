@@ -15,6 +15,14 @@ export default class ActivitiesRepository {
     });
   }
 
+  public async findAllByProjectId(
+    project_id: string,
+  ): Promise<Activities[] | undefined> {
+    return await this.ormRepository.find({
+      where: { project: { id: project_id } },
+    });
+  }
+
   public async findAll(): Promise<Activities[]> {
     return await this.ormRepository.find();
   }
