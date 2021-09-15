@@ -11,14 +11,15 @@ class ProjectsRepository implements IProjectsRepository {
   }
 
   public async findAll(id: string, role:string): Promise<Project[]> {
-   /* return  this.ormRepository
-    .createQueryBuilder('pro')
-    .innerJoinAndSelect('pro.proposals', 'proposals')
-    .innerJoinAndSelect('proposals.userAccept', 'userAccept')
-    .where('userCreate.id = :id OR userAccept.id = :id', { id: id })
-    .andWhere('proposals.user_accept_id is not null ')
+    return  this.ormRepository
+    .createQueryBuilder('project')
+    .innerJoinAndSelect('project.proposals', 'proposals')
+    .innerJoinAndSelect('users', 'user', 'proposals.userAccept = user.id or proposals.userCreate = user.id ')
+    .where('(proposals.user_accept_id = :id OR proposals.user_create_id = :id) and user.role = :role', { id: id, role:role })
+   // .andWhere('user.role = :role',{role:role})
     .getMany();
-*/
+/* 
+faz a mesma coisa mas do jeito tradicional sem o query builder alem do json vir todo cagado
 return this.ormRepository.query(`
 select
 *
@@ -28,7 +29,8 @@ inner join users  on (users.id = proposals.user_accept_id or users.id = proposal
 where ((proposals.user_accept_id = $1)
 OR (proposals.user_create_id = $1))
 AND users.role = $2`,[id, role])
-  }
+*/  
+}
   
   public async findById(id: string): Promise<Project | undefined> {
     return this.ormRepository.findOne(id, {
