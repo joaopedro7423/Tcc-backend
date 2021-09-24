@@ -1,9 +1,8 @@
-import { hash } from 'bcrypt';
 import AppError from '../errors/AppError';
 import  Notifications  from '../models/Notifications';
 
-import InotificationRepository from '../repositories/InotificationRepository';
-import notificationRepository from '../repositories/notificationRepository';
+import INotificationRepository from '../repositories/INotificationRepository';
+import NotificationRepository from '../repositories/NotificationRepository';
 
 interface Request {
   id: string;
@@ -12,13 +11,13 @@ interface Request {
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class UpdatNotificationService {
-  private notificationRepository: InotificationRepository;
+  private NotificationRepository: INotificationRepository;
 
-  constructor(notificationRepository: notificationRepository) {
-    this.notificationRepository = notificationRepository;
+  constructor(NotificationRepository: NotificationRepository) {
+    this.NotificationRepository = NotificationRepository;
   }
   public async execute({ id, description }: Request): Promise<Notifications> {
-    const notification = await this.notificationRepository.findById(id);
+    const notification = await this.NotificationRepository.findById(id);
 
     //se o cliente não existir retorna um error
     if (!notification) {
@@ -28,7 +27,7 @@ export default class UpdatNotificationService {
     notification.description = description;
 
     //salva
-    await this.notificationRepository.save(notification);
+    await this.NotificationRepository.save(notification);
 
     return notification;
   }

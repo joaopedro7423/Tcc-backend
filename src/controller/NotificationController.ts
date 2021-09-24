@@ -10,23 +10,23 @@ export default class NotificationController {
   public async index(req: Request, res: Response): Promise<Response> {
     const { course_id, role, id } = req.user;
 
-    const notificationRepository = new NotificationRepository();
+    const NotificationRepository = new NotificationRepository();
 
     if (role == 'adm') {
-      const notification = await notificationRepository.findAll();
+      const notification = await NotificationRepository.findAll();
 
       return res.json(notification);
     }
 
     if (role == 'professor') {
-      const notification = await notificationRepository.findAllByIdProfessor(
+      const notification = await NotificationRepository.findAllByIdProfessor(
         id,
       );
 
       return res.json(notification);
     }
 
-    const notification = await notificationRepository.findByCourse(course_id);
+    const notification = await NotificationRepository.findByCourse(course_id);
 
     return res.json(notification);
   }
@@ -37,9 +37,9 @@ export default class NotificationController {
     const { id } = req.user;
     //console.log(user_id)
     const user_id = id;
-    const notificationRepository = new NotificationRepository();
+    const NotificationRepository = new NotificationRepository();
     const createnotification = new CreateNotificationService(
-      notificationRepository,
+      NotificationRepository,
     );
 
     const notification = await createnotification.execute({
@@ -54,9 +54,9 @@ export default class NotificationController {
     const { id } = req.params;
     const { description } = req.body;
 
-    const notificationRepository = new NotificationRepository();
+    const NotificationRepository = new NotificationRepository();
     const updatenotification = new UpdatNotificationService(
-      notificationRepository,
+      NotificationRepository,
     );
 
     const notification = await updatenotification.execute({
@@ -70,9 +70,9 @@ export default class NotificationController {
   public async destroy(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
 
-    const notificationRepository = new NotificationRepository();
+    const NotificationRepository = new NotificationRepository();
     const destroyNotification = new DeleteNotificationService(
-      notificationRepository,
+      NotificationRepository,
     );
     await destroyNotification.execute(id);
 

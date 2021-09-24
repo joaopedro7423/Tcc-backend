@@ -1,4 +1,3 @@
-import { request } from 'express';
 import { getRepository, Repository } from 'typeorm';
 import ICreateNotificationDTO from '../dtos/ICreateNotificationDTO';
 import Notification from '../models/Notifications';

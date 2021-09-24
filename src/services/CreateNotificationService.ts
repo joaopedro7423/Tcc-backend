@@ -2,8 +2,8 @@ import AppError from '../errors/AppError';
 import  Notifications  from '../models/Notifications';
 
 
-import InotificationRepository from '../repositories/InotificationRepository';
-import notificationRepository from '../repositories/notificationRepository';
+import INotificationRepository from '../repositories/INotificationRepository';
+import NotificationRepository from '../repositories/NotificationRepository';
 
 interface Request {
   description: string;
@@ -12,16 +12,16 @@ interface Request {
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class CreateNotificationService {
-  private notificationRepository: InotificationRepository;
+  private NotificationRepository: INotificationRepository;
 
-  constructor(notificationRepository: notificationRepository) {
-    this.notificationRepository = notificationRepository;
+  constructor(NotificationRepository: NotificationRepository) {
+    this.NotificationRepository = NotificationRepository;
   }
   public async execute({
     description,
     user_id,
   }: Request): Promise<Notifications> {
-    const Notification = await this.notificationRepository.create({
+    const Notification = await this.NotificationRepository.create({
       description,
       user_id,
     });

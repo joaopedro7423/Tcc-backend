@@ -2,16 +2,16 @@ import validator from 'validator';
 
 import AppError from "../errors/AppError";
 
-import InotificationRepository from "../repositories/InotificationRepository";
-import notificationRepository from "../repositories/notificationRepository";
+import INotificationRepository from "../repositories/INotificationRepository";
+import NotificationRepository from "../repositories/NotificationRepository";
 
 //essa parada (Service) aqui que se faz as regras de negócio
 export default class DeleteNotificationService {
 
-    private notificationRepository: InotificationRepository
+    private NotificationRepository: INotificationRepository
 
-    constructor(notificationRepository: notificationRepository) {
-        this.notificationRepository = notificationRepository
+    constructor(NotificationRepository: NotificationRepository) {
+        this.NotificationRepository = NotificationRepository
 
     }
     public async execute(id: string): Promise<void> {
@@ -20,11 +20,11 @@ export default class DeleteNotificationService {
       if (!validator.isUUID(id)) {
         throw new AppError('Codigo  invalido!', 400);
       }
-        const userExist = await this.notificationRepository.findById(id)
+        const userExist = await this.NotificationRepository.findById(id)
 
         if(!userExist){
             throw new AppError('notification dont exist', 401)
         }
-        await this.notificationRepository.delete(id)
+        await this.NotificationRepository.delete(id)
     }
 }
