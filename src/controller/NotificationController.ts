@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 
 import NotificationRepository from '../repositories/NotificationRepository';
-import CreatenotificationService from '../services/CreatenotificationService';
+import CreateNotificationService from '../services/CreateNotificationService';
 import DeleteNotificationService from '../services/DeleteNotificationService';
-import UpdatNotificationService from '../services/UpdatnotificationService';
+import UpdatNotificationService from '../services/UpdatNotificationService';
 
 export default class NotificationController {
   //para achar todos os notification listar claro
@@ -38,7 +38,7 @@ export default class NotificationController {
     //console.log(user_id)
     const user_id = id;
     const notificationRepository = new NotificationRepository();
-    const createnotification = new CreatenotificationService(
+    const createnotification = new CreateNotificationService(
       notificationRepository,
     );
 
