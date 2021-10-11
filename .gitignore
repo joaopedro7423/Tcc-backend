@@ -11,3 +11,5 @@ uploads
 comando_uteis.txt
 ormconfig.json
 output
+
+.env
